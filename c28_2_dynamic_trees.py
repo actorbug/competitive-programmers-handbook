@@ -32,7 +32,7 @@ class Node:
 
 class Sparse:
     def __init__(self,n):
-        self.root=Node(0,0,2**(n-1).bit_length()-1)
+        self.root=Node(0,0,2**max(n-1,0).bit_length()-1)
     def sum(self,a,b):
         return self.root.sum(a,b)
     def add(self,k,v):
@@ -70,7 +70,7 @@ class PNode:
 
 class Permanent:
     def __init__(self,n):
-        self.hist=[PNode(0,0,2**(n-1).bit_length()-1)]
+        self.hist=[PNode(0,0,2**max(n-1,0).bit_length()-1)]
     def sum(self,a,b,h=0):
         return self.hist[-h-1].sum(a,b)
     def add(self,k,v):

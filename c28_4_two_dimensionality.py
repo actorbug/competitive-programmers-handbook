@@ -3,7 +3,7 @@ from c09_3_segment_tree import SegTree
 
 class SegTree2D:
     def __init__(self,array):
-        n=2**(len(array)-1).bit_length()
+        n=2**max(len(array)-1,0).bit_length()
         self.tree=[None]*n+[*map(SegTree,array)]+[SegTree(len(array[0]))]*(n-len(array))
         for i in range(n-1,0,-1):
             self.tree[i]=SegTree.__new__(SegTree)

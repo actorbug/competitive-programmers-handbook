@@ -3,10 +3,10 @@ import unittest
 class SegTree:
     def __init__(self,arg):
         if isinstance(arg,int):
-            n=2**(arg-1).bit_length()
+            n=2**max(arg-1,0).bit_length()
             self.tree=[0]*(n*2)
         else:
-            n=2**(len(arg)-1).bit_length()
+            n=2**max(len(arg)-1,0).bit_length()
             self.tree=[0]*n+arg+[0]*(n-len(arg))
             for i in range(n-1,0,-1):
                 self.tree[i]=self.tree[2*i]+self.tree[2*i+1]
@@ -33,7 +33,7 @@ class SegTree:
 class SegTreeMin:
     def __init__(self,array):
         self.MAX=max(array)+1
-        n=2**(len(array)-1).bit_length()
+        n=2**max(len(array)-1,0).bit_length()
         self.tree=[0]*n+array+[self.MAX]*(n-len(array))
         for i in range(n-1,0,-1):
             self.tree[i]=min(self.tree[2*i],self.tree[2*i+1])

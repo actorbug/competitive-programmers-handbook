@@ -2,7 +2,7 @@ import unittest
 
 class SegTree:
     def __init__(self,array):
-        n=2**(len(array)-1).bit_length()
+        n=2**max(len(array)-1,0).bit_length()
         self.tree=[0]*n+array+[0]*(n-len(array))
         for i in range(n-1,0,-1):
             self.tree[i]=self.tree[2*i]+self.tree[2*i+1]

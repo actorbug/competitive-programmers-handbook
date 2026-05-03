@@ -3,7 +3,7 @@ from itertools import zip_longest
 
 class LazySegTree:
     def __init__(self,array):
-        self.n=2**(len(array)-1).bit_length()
+        self.n=2**max(len(array)-1,0).bit_length()
         self.s=[0]*self.n+array+[0]*(self.n-len(array))
         self.z=[0]*(self.n*2)
         for i in range(self.n-1,0,-1):
@@ -52,7 +52,7 @@ def ind_sum_poly(z,n):
 
 class PolyLazySegTree:
     def __init__(self,array):
-        self.n=2**(len(array)-1).bit_length()
+        self.n=2**max(len(array)-1,0).bit_length()
         self.s=[0]*self.n+array+[0]*(self.n-len(array))
         self.z=[[] for _ in range(self.n*2)]
         for i in range(self.n-1,0,-1):

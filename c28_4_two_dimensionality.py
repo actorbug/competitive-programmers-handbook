@@ -4,7 +4,7 @@ from c09_3_segment_tree import SegTree
 class SegTree2D:
     def __init__(self,array):
         n=2**max(len(array)-1,0).bit_length()
-        self.tree=[None]*n+[*map(SegTree,array)]+[SegTree(len(array[0]))]*(n-len(array))
+        self.tree=[None]*n+[*map(SegTree,array)]+[SegTree(len(array[0]) if array else 0)]*(n-len(array))
         for i in range(n-1,0,-1):
             self.tree[i]=SegTree.__new__(SegTree)
             self.tree[i].tree=[a+b for a,b in zip(self.tree[2*i].tree,self.tree[2*i+1].tree)]
@@ -30,6 +30,8 @@ class SegTree2D:
 
 class Test(unittest.TestCase):
     def test(self):
+        s=SegTree2D([])
+        self.assertEqual(s.sum(0,-1,0,-1),0)
         s=SegTree2D([[7,6,1,6],[8,7,5,2],[3,9,7,1],[8,5,3,8]])
         self.assertEqual(s.sum(1,2,1,2),28)
 

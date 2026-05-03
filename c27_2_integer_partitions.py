@@ -26,7 +26,9 @@ def string_construction(s,d):
 
 class Test(unittest.TestCase):
     def test(self):
+        self.assertEqual(knapsack([]),[True])
         self.assertEqual(knapsack([1,3,3]),[True,True,False,True,True,False,True,True])
+        self.assertEqual(string_construction('',{}),1)
         self.assertEqual(string_construction('ABAB',{'A','B','AB'}),4)
 
 if __name__=='__main__':

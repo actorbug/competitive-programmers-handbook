@@ -31,6 +31,8 @@ class SegTree:
 
 class Test(unittest.TestCase):
     def test(self):
+        s=SegTree([])
+        self.assertEqual(s.count(1,0,-1),0)
         s=SegTree([3,1,2,3,1,1,1,2])
         self.assertEqual(s.count(1,1,5),3)
 

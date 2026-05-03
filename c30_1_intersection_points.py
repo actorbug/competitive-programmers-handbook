@@ -25,6 +25,7 @@ def count(ls):
 
 class Test(unittest.TestCase):
     def test(self):
+        self.assertEqual(count([]),0)
         self.assertEqual(count([(0+1j,3+1j),(1+3j,4+3j),(4+2j,6+2j),(2+0j,2+5j),(5+1j,5+4j)]),3)
 
 if __name__=='__main__':

@@ -8,7 +8,7 @@ def dec(c,i):
         del c[i]
 
 def mo(l,q):
-    m=isqrt(len(l)-1)+1
+    m=isqrt(max(len(l)-1,0))+1
     c=Counter()
     r=[None]*len(q)
     b=e=0
@@ -32,6 +32,7 @@ def mo(l,q):
 
 class Test(unittest.TestCase):
     def test(self):
+        self.assertEqual(mo([],[]),[])
         self.assertEqual(mo([4,2,5,4,2,4,3,3,4],[(1,5),(2,7)]),[3,4])
 
 if __name__=='__main__':

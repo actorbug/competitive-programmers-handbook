@@ -42,7 +42,7 @@ def min_dist(board):
 
 def min_dist2(pos):
     h,w=(max(*v)+1 for v in zip(*pos))
-    m=1+isqrt(len(pos)-1)
+    m=1+isqrt(max(len(pos)-1,0))
     for i,(y,x) in enumerate(pos):
         if i>0:
             yield min(chain((board[y][x],),(abs(y-y1)+abs(x-x1) for y1,x1 in rest)))

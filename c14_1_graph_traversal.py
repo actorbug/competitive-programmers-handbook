@@ -6,7 +6,7 @@ def graph_traversal(adj,x):
         for u in adj[s]:
             if u!=e:
                 yield from dfs(u,s)
-    yield from dfs(x,-1)
+    return dfs(x,-1)
 
 def dynamic_programming(adj,x):
     count=[1]*len(adj)

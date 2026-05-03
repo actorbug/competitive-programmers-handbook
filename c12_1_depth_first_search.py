@@ -9,7 +9,7 @@ def dfs(adj,x):
         yield s
         for u in adj[s]:
             yield from rec(u)
-    yield from rec(x)
+    return rec(x)
 
 class Test(unittest.TestCase):
     def test(self):

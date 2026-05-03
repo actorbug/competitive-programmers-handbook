@@ -1,5 +1,5 @@
 import unittest
-from random import randint,randrange
+from random import seed,randint,randrange
 from c23_1_operations import M
 
 def partition(a,left,right,pivotIndex):
@@ -40,6 +40,7 @@ def coloring(edges):
 
 class Test(unittest.TestCase):
     def test(self):
+        seed(0)
         self.assertEqual(order_statistics([8,4,3,7,6,5,2,1],3),4)
         self.assertFalse(verify(M([[1,0],[0,1]]),M([[6,8],[1,3]]),M([[8,7],[3,2]])))
         edges=[(0,1),(0,2),(0,3),(1,3),(1,4),(2,3),(3,4)]

@@ -7,7 +7,7 @@ class SegTree:
         self.tree=[None]*n+[Counter([i]) for i in array]+[Counter()]*(n-len(array))
         for i in range(n-1,0,-1):
             self.tree[i]=self.tree[2*i]+self.tree[2*i+1]
-    def count(self,x,a,b):
+    def count(self,a,b,x):
         a+=len(self.tree)//2
         b+=len(self.tree)//2
         s=0
@@ -34,7 +34,7 @@ class Test(unittest.TestCase):
         s=SegTree([])
         self.assertEqual(s.count(1,0,-1),0)
         s=SegTree([3,1,2,3,1,1,1,2])
-        self.assertEqual(s.count(1,1,5),3)
+        self.assertEqual(s.count(1,5,1),3)
 
 if __name__=='__main__':
     unittest.main()

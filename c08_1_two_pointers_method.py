@@ -1,17 +1,17 @@
 import unittest
 
 def subarray_sum(a,x):
-    i=j=s=0
-    while s<x and j<len(a):
-        if s+a[j]<=x:
-            s+=a[j]
-            j+=1
-        elif i<j:
+    if x==0:
+        return 0,0
+    i=s=0
+    for j in range(len(a)):
+        s+=a[j]
+        while i<=j and s>x:
             s-=a[i]
             i+=1
-        else:
-            i=j=i+1
-    return (i,j) if s==x else (None,None)
+        if s==x:
+            return i,j+1
+    return None,None
 
 def two_sum_problem(a,x):
     a=sorted(a)

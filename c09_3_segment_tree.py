@@ -30,17 +30,18 @@ class SegTree:
         while (k:=k//2)>=1:
             self.tree[k]=self.tree[2*k]+self.tree[2*k+1]
 
+INF=10**10
+
 class SegTreeMin:
     def __init__(self,array):
-        self.MAX=max(array)+1
         n=2**max(len(array)-1,0).bit_length()
-        self.tree=[0]*n+array+[self.MAX]*(n-len(array))
+        self.tree=[0]*n+array+[INF]*(n-len(array))
         for i in range(n-1,0,-1):
             self.tree[i]=min(self.tree[2*i],self.tree[2*i+1])
     def min(self,a,b):
         a+=len(self.tree)//2
         b+=len(self.tree)//2
-        m=self.MAX
+        m=INF
         while a<=b:
             if a%2==1:
                 m=min(m,self.tree[a])

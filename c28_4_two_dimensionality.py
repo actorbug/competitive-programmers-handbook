@@ -8,7 +8,7 @@ class SegTree2D:
         for i in range(n-1,0,-1):
             self.tree[i]=SegTree.__new__(SegTree)
             self.tree[i].tree=[a+b for a,b in zip(self.tree[2*i].tree,self.tree[2*i+1].tree)]
-    def sum(self,xa,xb,ya,yb):
+    def sum(self,ya,yb,xa,xb):
         ya+=len(self.tree)//2
         yb+=len(self.tree)//2
         s=0
@@ -22,7 +22,7 @@ class SegTree2D:
             ya//=2
             yb//=2
         return s
-    def add(self,x,y,v):
+    def add(self,y,x,v):
         y+=len(self.tree)//2
         while y>=1:
             self.tree[y].add(x,v)
@@ -33,9 +33,9 @@ class Test(unittest.TestCase):
         s=SegTree2D([])
         self.assertEqual(s.sum(0,-1,0,-1),0)
         s=SegTree2D([[7,6,1,6],[8,7,5,2],[3,9,7,1],[8,5,3,8]])
-        self.assertEqual(s.sum(0,1,1,3),40)
-        s.add(0, 1, 2)
-        self.assertEqual(s.sum(0,1,1,3),42)
+        self.assertEqual(s.sum(1,3,0,1),40)
+        s.add(1,0,2)
+        self.assertEqual(s.sum(1,3,0,1),42)
 
 if __name__=='__main__':
     unittest.main()

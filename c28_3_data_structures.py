@@ -23,9 +23,11 @@ class SegTree:
         return s
     def __setitem__(self,k,x):
         k+=len(self.tree)//2
-        p=next(self.tree[k])
+        p=next(iter(self.tree[k]))
         while k>=1:
             self.tree[k][p]-=1
+            if self.tree[k][p] <= 0:
+                del self.tree[k][p]
             self.tree[k][x]+=1
             k//=2
 
@@ -35,6 +37,8 @@ class Test(unittest.TestCase):
         self.assertEqual(s.count(1,0,-1),0)
         s=SegTree([3,1,2,3,1,1,1,2])
         self.assertEqual(s.count(1,5,1),3)
+        s[5]=2
+        self.assertEqual(s.count(1,5,1),2)
 
 if __name__=='__main__':
     unittest.main()

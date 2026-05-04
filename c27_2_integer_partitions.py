@@ -30,6 +30,7 @@ class Test(unittest.TestCase):
         self.assertEqual(knapsack([1,3,3]),[True,True,False,True,True,False,True,True])
         self.assertEqual(string_construction('',{}),1)
         self.assertEqual(string_construction('ABAB',{'A','B','AB'}),4)
+        self.assertEqual(string_construction('ABAB',{'A','BA'}),0)
 
 if __name__=='__main__':
     unittest.main()

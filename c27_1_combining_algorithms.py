@@ -4,7 +4,7 @@ from collections import deque,defaultdict
 from math import isqrt
 
 def min_dist(board):
-    h,w=len(board),len(board[0])
+    h,w=len(board),len(board[0]) if board else 0
     mind,minp=w+h,None
     def algorithm1(ps):
         nonlocal mind,minp
@@ -34,7 +34,7 @@ def min_dist(board):
         for j,c in enumerate(a):
             d[c].append((i,j))
     for ps in d.values():
-        if len(ps)**2<n:
+        if len(ps)**2<=n:
             algorithm1(ps)
         else:
             algorithm2(ps)
@@ -66,7 +66,11 @@ def min_dist2(pos):
 
 class Test(unittest.TestCase):
     def test(self):
+        self.assertIsNone(min_dist([]))
+        self.assertCountEqual(min_dist(['AA']),((0,0),(0,1)))
         self.assertCountEqual(min_dist(['AFBA','CEGE','BDAF','ACBD']),((1,1),(1,3)))
+        self.assertCountEqual(min_dist(['AFBA','CHGE','BDAF','ACBA']),((2,2),(3,3)))
+        self.assertIsNone(min_dist(['ABCD','EFGH','IJKL','MNOP']))
         self.assertEqual([*min_dist2([(0,0),(2,3),(2,1),(0,2),(3,0),(3,2),(0,1),(0,3),(1,0),(1,1),(1,2),(1,3),(2,0),(2,2),(3,1),(3,3)])],[5,2,2,2,2,1,1,1,1,1,1,1,1,1,1])
 
 if __name__=='__main__':

@@ -54,6 +54,7 @@ class Test(unittest.TestCase):
         self.assertEqual(M([[3,4],[1,6]]).det(),14)
         self.assertEqual(M([[2,4,3],[5,1,6],[7,2,4]]).det(),81)
         self.assertEqual(M([[Fraction(2),4,3],[5,1,6],[7,2,4]]).inv(),M([[Fraction(-8,81),Fraction(-10,81),Fraction(7,27)],[Fraction(22,81),Fraction(-13,81),Fraction(1,27)],[Fraction(1,27),Fraction(8,27),Fraction(-2,9)]]))
+        self.assertEqual(M([[6,1,4],[3,9,2]]).transpose(),M([[6,3],[1,9],[4,2]]))
 
 if __name__=='__main__':
     unittest.main()

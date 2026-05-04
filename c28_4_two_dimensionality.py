@@ -33,7 +33,9 @@ class Test(unittest.TestCase):
         s=SegTree2D([])
         self.assertEqual(s.sum(0,-1,0,-1),0)
         s=SegTree2D([[7,6,1,6],[8,7,5,2],[3,9,7,1],[8,5,3,8]])
-        self.assertEqual(s.sum(1,2,1,2),28)
+        self.assertEqual(s.sum(0,1,1,3),40)
+        s.add(0, 1, 2)
+        self.assertEqual(s.sum(0,1,1,3),42)
 
 if __name__=='__main__':
     unittest.main()

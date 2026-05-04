@@ -79,6 +79,9 @@ class Test(unittest.TestCase):
         s=SegTreeMin([5,8,6,3,1,7,2,6])
         self.assertEqual(s.min(2,7),1)
         self.assertEqual(s.minpos(),4)
+        s.add(4, 3)
+        self.assertEqual(s.min(2,7),2)
+        self.assertEqual(s.minpos(),6)
 
 if __name__=='__main__':
     unittest.main()

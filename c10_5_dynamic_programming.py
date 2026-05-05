@@ -3,25 +3,41 @@ import unittest
 INF=1<<63
 
 def optimal_selection(price):
-    n=len(price[0]) if price else 0
-    k=len(price)
-    total=[0]+[INF]*((1<<k)-1)
-    for d in range(1,n+1):
-        for s in range((1<<k)-1,0,-1):
-            total[s]=min(total[s],min(total[s^(1<<x)]+price[x][d-1] for x in range(k) if s&(1<<x)))
-    return total[-1] if total[-1]<INF else None
+    if not price:
+        return 0
+    n,k=len(price[0]),len(price)
+    if n<k:
+        return None
+    total=[[INF]*n for _ in range(1<<k)]
+    total[0][0]=0
+    for x in range(k):
+        total[1<<x][0]=price[x][0]
+    for d in range(1,n):
+        for s in range(1<<k):
+            total[s][d]=total[s][d-1]
+            for x in range(k):
+                if s&(1<<x):
+                    total[s][d]=min(total[s][d],total[s^(1<<x)][d-1]+price[x][d])
+    return total[-1][-1]
 
 def from_permutations_to_subsets(x,weight):
+    if not weight:
+        return 0
     if any(x<w for w in weight):
         return None
-    def add(r,l,w):
-        if l+w<=x:
-            return r,l+w
-        else:
-            return r+1,w
-    best=[(0,x)]
-    for s in range(1,1<<len(weight)):
-        best.append(min(add(*best[s^(1<<p)],w) for p,w in enumerate(weight) if s&(1<<p)))
+    n=len(weight)
+    best=[(n+1,0)]*(1<<n)
+    best[0]=1,0
+    for s in range(1,1<<n):
+        for p in range(n):
+            if s&(1<<p):
+                rides,last=best[s^(1<<p)]
+                if last+weight[p]<=x:
+                    last+=weight[p]
+                else:
+                    rides+=1
+                    last=weight[p]
+                best[s]=min(best[s],(rides,last))
     return best[-1][0]
 
 def counting_subsets(value):

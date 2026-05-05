@@ -15,7 +15,7 @@ def topological(adj):
         return True
     for x in range(n):
         if not visited[x] and not dfs(x):
-                return None
+            return None
     ret.reverse()
     return ret
 

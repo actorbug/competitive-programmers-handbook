@@ -55,6 +55,7 @@ class Test(unittest.TestCase):
         self.assertIsNone(optimal_selection([[]]))
         self.assertEqual(optimal_selection([[6,9,5,2,8,9,1,6],[8,2,6,2,7,5,7,2],[5,3,9,7,3,5,1,4]]),5)
         self.assertEqual(from_permutations_to_subsets(10,[]),0)
+        self.assertEqual(from_permutations_to_subsets(10,[0]),1)
         self.assertIsNone(from_permutations_to_subsets(2,[3]))
         self.assertEqual(from_permutations_to_subsets(10,[2,3,3,5,6]),2)
         self.assertEqual(counting_subsets([1]),[1])

@@ -30,7 +30,7 @@ class SegTree:
         while (k:=k//2)>=1:
             self.tree[k]=self.tree[2*k]+self.tree[2*k+1]
 
-INF=10**10
+INF=1<<63
 
 class SegTreeMin:
     def __init__(self,array):

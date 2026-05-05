@@ -1,7 +1,7 @@
 import unittest
 from collections import deque
 
-INF=1_000_000
+INF=1<<63
 
 def bellman_ford(adj,x):
     n=len(adj)

@@ -1,7 +1,7 @@
 import unittest
 from functools import cache
 
-INF=10**10
+INF=1<<63
 
 def solve(coins,x):
     if x<0:

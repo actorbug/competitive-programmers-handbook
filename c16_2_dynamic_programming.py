@@ -2,7 +2,7 @@ import unittest
 from heapq import heappush,heappop
 from collections import deque
 from graphlib import TopologicalSorter
-INF=1_000_000
+INF=1<<63
 
 def count_path(adj,a,b):
     paths=[0]*len(adj)

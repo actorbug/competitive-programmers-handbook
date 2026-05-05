@@ -1,7 +1,7 @@
 import unittest
 from copy import deepcopy
 
-INF=1_000_000
+INF=1<<63
 
 def floyd_warshall(adj):
     n=len(adj)

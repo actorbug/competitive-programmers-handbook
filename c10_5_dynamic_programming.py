@@ -1,9 +1,10 @@
 import unittest
 
+INF=1<<63
+
 def optimal_selection(price):
     n=len(price[0]) if price else 0
     k=len(price)
-    INF=sum(max(p,default=0) for p in price)+1
     total=[0]+[INF]*((1<<k)-1)
     for d in range(1,n+1):
         for s in range((1<<k)-1,0,-1):

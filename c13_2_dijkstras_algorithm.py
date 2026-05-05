@@ -1,7 +1,7 @@
 import unittest
 from heapq import heappush,heappop
 
-INF=1_000_000
+INF=1<<63
 
 def dijkstra(adj,x):
     distance=[INF]*len(adj)

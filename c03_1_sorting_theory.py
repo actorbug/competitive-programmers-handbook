@@ -1,4 +1,7 @@
 import unittest
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def bubblesort(array):
     for i in range(len(array)-1,0,-1):

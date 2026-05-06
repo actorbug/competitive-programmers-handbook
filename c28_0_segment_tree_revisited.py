@@ -1,4 +1,7 @@
 import unittest
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 class SegTree:
     def __init__(self,array):

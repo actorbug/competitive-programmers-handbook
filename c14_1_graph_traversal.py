@@ -1,4 +1,7 @@
 import unittest
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def graph_traversal(adj,x):
     def dfs(s,e):

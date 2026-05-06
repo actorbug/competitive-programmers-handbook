@@ -2,6 +2,9 @@ import unittest
 from typing import Optional
 from dataclasses import dataclass
 from copy import copy
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 @dataclass
 class Node:

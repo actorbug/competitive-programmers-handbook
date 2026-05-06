@@ -1,6 +1,9 @@
 import unittest
 from c09_2_binary_indexed_tree import BIT
 from c09_4_additional_techniques import RangeUpdates
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def traversal(adj,x):
     def dfs(s,e):

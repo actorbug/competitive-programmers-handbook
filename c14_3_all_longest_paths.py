@@ -1,5 +1,8 @@
 import unittest
 from heapq import heappushpop
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def all_longest_paths(adj):
     maxLength=[[(0,s),(0,s)] for s in range(len(adj))]

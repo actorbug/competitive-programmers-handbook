@@ -1,4 +1,7 @@
 import unittest
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 dv=((1,0),(-1,0),(0,1),(0,-1))
 

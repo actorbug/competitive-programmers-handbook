@@ -1,5 +1,8 @@
 import unittest
 from functools import cache
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 INF=1<<63
 

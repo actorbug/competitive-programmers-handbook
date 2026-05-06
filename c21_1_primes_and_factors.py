@@ -1,6 +1,9 @@
 import unittest
 from itertools import groupby
 from math import prod,isqrt,log
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def prime(n):
     if n<2:

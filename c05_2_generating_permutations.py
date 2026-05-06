@@ -1,5 +1,8 @@
 import unittest
 from itertools import permutations
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def method1(n):
     permutation,chosen=[],[False]*n

@@ -1,5 +1,8 @@
 import unittest
 from c09_1_static_array_queries import MinimumQueries
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 class Doubling:
     def __init__(self,adj):

@@ -1,5 +1,8 @@
 import unittest
 from itertools import count
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def grundy(init,func):
     cache={}

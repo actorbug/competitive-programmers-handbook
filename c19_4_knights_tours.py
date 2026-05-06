@@ -1,4 +1,7 @@
 import unittest
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def warnsdorf(h,w,y=0,x=0):
     board=[[0]*w+[-1]*2 for _ in range(h)]+[[-1]*(w+2)]*2

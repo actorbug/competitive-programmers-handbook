@@ -1,5 +1,8 @@
 import unittest
 from fractions import Fraction
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 class M:
     def __init__(self,v):

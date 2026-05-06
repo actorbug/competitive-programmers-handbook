@@ -1,6 +1,9 @@
 import unittest
 from collections import Counter
 from heapq import heapify,heappush,heappop
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def huffman(freq):
     i=0

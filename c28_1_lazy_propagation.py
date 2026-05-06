@@ -1,5 +1,8 @@
 import unittest
 from itertools import zip_longest
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 class LazySegTree:
     def __init__(self,array):

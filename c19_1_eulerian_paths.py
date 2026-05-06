@@ -1,6 +1,9 @@
 import unittest
 from collections import defaultdict
 from c17_1_kosarajus_algorithm import reversed_adj
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def existence(adj):
     odd=[]

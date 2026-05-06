@@ -1,6 +1,9 @@
 import unittest
 from collections import Counter,defaultdict
 from c15_2_union_find_structure import UnionFind
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def merging(adj,val,x,q):
     a=[None]*len(q)

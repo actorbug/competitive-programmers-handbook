@@ -1,28 +1,39 @@
 import unittest
-from bisect import bisect_left,insort
+from bisect import bisect_left
+from c09_2_binary_indexed_tree import BIT
 
-def asc_x(p):
-    return p.real,p.imag
-
-def asc_y(p):
-    return p.imag,p.real
+class SortedY:
+    def __init__(self,points):
+        self.p=points
+        self.b=BIT(len(points))
+    def add(self,i):
+        self.b.add(i+1,1)
+    def remove(self,i):
+        self.b.add(i+1,-1)
+    def range(self,l,r):
+        i=bisect_left(self.p,l,key=lambda i:i.imag)
+        i=self.b.lower_bound(i+1)
+        while i<=len(self.p) and self.p[i-1].imag<=r:
+            yield i-1
+            i=self.b.lower_bound(i+1)
 
 def closest_pair(points):
-    points=sorted(points,key=asc_x)
-    b=sorted([points[0],points[1]],key=asc_y)
-    i,d,r=0,abs(points[0]-points[1]),(points[0],points[1])
-    for j in range(2,len(points)):
-        while i<j and points[i].real<points[j].real-d:
-            del b[bisect_left(b,asc_y(points[i]),key=asc_y)]
+    points=sorted(points,key=lambda p:(p.imag,p.real))
+    px=sorted(range(len(points)),key=lambda i:(points[i].real,points[i].imag))
+    py=SortedY(points)
+    py.add(px[0])
+    py.add(px[1])
+    i,d,r=0,abs(points[px[0]]-points[px[1]]),(px[0],px[1])
+    for j in range(2,len(px)):
+        while i<j and points[px[i]].real<points[px[j]].real-d:
+            py.remove(px[i])
             i+=1
-        l=bisect_left(b,(points[j].imag-d,points[j].real-d),key=asc_y)
-        while l<len(b) and b[l].imag<=points[j].imag+d:
-            d1=abs(b[l]-points[j])
+        for l in py.range(points[px[j]].imag-d,points[px[j]].imag+d):
+            d1=abs(points[l]-points[px[j]])
             if d>d1:
-                d,r=d1,(b[l],points[j])
-            l+=1
-        insort(b,points[j],key=asc_y)
-    return r
+                d,r=d1,(l,px[j])
+        py.add(px[j])
+    return points[r[0]],points[r[1]]
 
 class Test(unittest.TestCase):
     def test(self):

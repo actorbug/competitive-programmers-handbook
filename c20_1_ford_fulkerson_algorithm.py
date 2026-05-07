@@ -1,5 +1,8 @@
 import unittest
 from collections import deque
+import sys
+
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 def bfs(adj,s,e):
     q=deque([s])
@@ -37,13 +40,12 @@ def scaling(adj,s,e):
         nonlocal m
         while m:
             prev=[-1]*len(adj)
-            stack=[(s,s)]
-            while stack and prev[e]<0:
-                i,p=stack.pop()
-                if prev[i]<0:
-                    prev[i]=p
-                    stack+=((j,i) for j,c in adj[i].items() if c>=m)
-            if prev[e]>=0:
+            def dfs(i,p):
+                if prev[i]>=0:
+                    return False
+                prev[i]=p
+                return i==e or any(dfs(u,i) for u,c in adj[i].items() if c>=m)
+            if dfs(s,s):
                 break
             m//=2
         return prev

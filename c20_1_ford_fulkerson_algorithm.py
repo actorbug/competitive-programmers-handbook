@@ -60,8 +60,8 @@ def minimum_cuts(adj,s):
             visited.add(i)
             stack+=(j for j,c in adj[i].items() if c>0)
     for i in visited:
-        for j,c in adj[i].items():
-            if c<=0 and j not in visited:
+        for j,_ in adj[i].items():
+            if j not in visited:
                 yield i,j
 
 def adj2tc(adj,e):

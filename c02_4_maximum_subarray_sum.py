@@ -5,10 +5,7 @@ def algorithm1(array):
     best=0
     for a in range(n):
         for b in range(a,n):
-            sum_=0
-            for k in array[a:b+1]:
-                sum_+=k
-            best=max(best,sum_)
+            best=max(best,sum(array[k] for k in range(a,b+1)))
     return best
 
 def algorithm2(array):
@@ -16,8 +13,8 @@ def algorithm2(array):
     best=0
     for a in range(n):
         sum_=0
-        for b in array[a:]:
-            sum_+=b
+        for b in range(a,n):
+            sum_+=array[b]
             best=max(best,sum_)
     return best
 

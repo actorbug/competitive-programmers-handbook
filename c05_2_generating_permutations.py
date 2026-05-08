@@ -7,17 +7,17 @@ sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 def method1(n):
     permutation,chosen=[],[False]*n
     def search():
-        if len(permutation)>=n:
+        if len(permutation)==n:
             yield permutation[:]
-            return
-        for i in range(n):
-            if chosen[i]:
-                continue
-            chosen[i]=True
-            permutation.append(i)
-            yield from search()
-            chosen[i]=False
-            permutation.pop()
+        else:
+            for i in range(n):
+                if chosen[i]:
+                    continue
+                chosen[i]=True
+                permutation.append(i)
+                yield from search()
+                chosen[i]=False
+                permutation.pop()
     return search()
 
 def method2(n):

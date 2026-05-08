@@ -6,7 +6,7 @@ sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 def method1(n):
     subset=[]
     def search(k):
-        if k>=n:
+        if k==n:
             yield subset[:]
             return
         yield from search(k+1)

@@ -8,11 +8,11 @@ def method1(n):
     def search(k):
         if k==n:
             yield subset[:]
-            return
-        yield from search(k+1)
-        subset.append(k)
-        yield from search(k+1)
-        subset.pop()
+        else:
+            yield from search(k+1)
+            subset.append(k)
+            yield from search(k+1)
+            subset.pop()
     return search(0)
 
 def method2(n):

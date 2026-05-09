@@ -1,15 +1,18 @@
 import unittest
 from math import prod
+import sys
 
-def matmul(a,b):
-    return *((*(sum(i*j for i,j in zip(ai,bi)) for bi in zip(*b)),) for ai in a),
+sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
+
+def ext_gcd(a,b):
+    if b==0:
+        return a,1,0
+    d,x,y=ext_gcd(b,a%b)
+    return d,y,x-(a//b)*y
 
 def diophantine(a,b,c):
-    m=((1,0),(0,1))
-    while b>0:
-        m=matmul(m,((0,1),(1,-(a//b))))
-        a,b=b,a%b
-    return (m[0][0]*c//a,m[1][0]*c//a) if c%a==0 else None
+    d,x,y=ext_gcd(a,b)
+    return (x*(c//d),y*(c//d)) if c%d==0 else None
 
 def chinese(xs):
     ms=prod(m for _,m in xs)

@@ -72,9 +72,10 @@ class Test(unittest.TestCase):
         coins=[1,3,4]
         for s in (solve,solve2,solve3):
             with self.subTest(s=s):
-                self.assertGreaterEqual(s(coins,-1),INF)
+                self.assertEqual(s(coins,-1),INF)
                 self.assertEqual(s(coins,0),0)
                 self.assertEqual(s(coins,10),3)
+                self.assertEqual(s([5],3),INF)
         self.assertCountEqual(solve4(coins,-1),[])
         self.assertCountEqual(solve4(coins,0),[])
         self.assertCountEqual(solve4(coins,10),[3,3,4])

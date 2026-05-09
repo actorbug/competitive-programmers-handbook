@@ -13,6 +13,7 @@ def max_distance(p):
 class Test(unittest.TestCase):
     def test(self):
         self.assertEqual(max_distance([0+2j,1+0j,3+3j,3+1j]),(1+0j,3+3j,5))
+        self.assertEqual(max_distance([2+0j,0+1j,3+3j,1+3j]),(0+1j,3+3j,5))
 
 if __name__=='__main__':
     unittest.main()

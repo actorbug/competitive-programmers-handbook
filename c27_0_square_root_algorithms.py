@@ -31,6 +31,7 @@ class Test(unittest.TestCase):
         self.assertEqual(r.k,4)
         self.assertEqual(r.b,[22,15,20,13])
         self.assertEqual(r.a,[5,8,6,3,2,5,2,6,7,1,7,5,6,2,3,2])
+        self.assertEqual(r.sum(1,4),17)
         self.assertEqual(r.sum(3,14),46)
 
 if __name__=='__main__':

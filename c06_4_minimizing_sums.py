@@ -1,7 +1,8 @@
 import unittest
+from c24_5_randomized_algorithms import order_statistics
 
 def min1(ary):
-    return sorted(ary)[len(ary)//2]
+    return order_statistics(ary,len(ary)//2)
 
 def sum1(ary,x):
     return sum(abs(a-x) for a in ary)

@@ -14,6 +14,7 @@ def partition(a,left,right,pivotIndex):
     return storeIndex
 
 def order_statistics(a,k):
+    a=a[:]
     left,right=0,len(a)-1
     while True:
         pivotIndex=randint(left,right)

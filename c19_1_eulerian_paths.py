@@ -2,6 +2,7 @@ import unittest
 from collections import defaultdict
 from c17_1_kosarajus_algorithm import reversed_adj
 import sys
+from itertools import pairwise
 
 sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
@@ -55,7 +56,23 @@ def hierhorzer2(adj):
         yield s
     return dfs(max(0,e[1]))
 
+
 class Test(unittest.TestCase):
+    def assertHierhorzer(self,adj):
+        with self.subTest(adj=adj):
+            adj2=[[] for _ in adj]
+            for i,j in pairwise(hierhorzer(adj)):
+                adj2[i].append(j)
+                adj2[j].append(i)
+            for i,j in zip(adj,adj2):
+                self.assertEqual(sorted(i), sorted(j))
+    def assertHierhorzer2(self,adj):
+        with self.subTest(adj=adj):
+            adj2=[[] for _ in adj]
+            for i,j in pairwise(hierhorzer2(adj)):
+                adj2[i].append(j)
+            for i,j in zip(adj,adj2):
+                self.assertEqual(sorted(i), sorted(j))
     def test(self):
         adj1=[[1,3],[0,2,4],[1,4],[0,4],[1,2,3]]
         adj2=[[1,3],[0,2,3,4],[1,4],[0,1],[1,2]]
@@ -73,15 +90,15 @@ class Test(unittest.TestCase):
         self.assertEqual(existence2(adj4),(-1,-1))
         self.assertIsNone(existence2([[1,2,3],[2,3],[3],[]]))
 
-        self.assertEqual([*hierhorzer([])],[])
-        self.assertEqual([*hierhorzer(adj1)],[1,2,4,3,0,1,4])
-        self.assertEqual([*hierhorzer(adj2)],[0,3,1,4,2,1,0])
-        self.assertEqual([*hierhorzer([[1,2],[0,2,4,5],[0,1,3,5],[2,6],[1,5],[1,2,4,6],[3,5]])],[0,2,5,4,1,5,6,3,2,1,0])
+        self.assertHierhorzer([])
+        self.assertHierhorzer(adj1)
+        self.assertHierhorzer(adj2)
+        self.assertHierhorzer([[1,2],[0,2,4,5],[0,1,3,5],[2,6],[1,5],[1,2,4,6],[3,5]])
 
-        self.assertEqual([*hierhorzer2([])],[])
-        self.assertEqual([*hierhorzer2(adj3)],[1,4,3,0,1,2,4])
-        self.assertEqual([*hierhorzer2(adj4)],[0,3,1,4,2,1,0])
-        self.assertEqual([*hierhorzer2([[1],[2,4],[0,3],[6],[5],[1,2],[5]])],[0,1,4,5,1,2,3,6,5,2,0])
+        self.assertHierhorzer2([])
+        self.assertHierhorzer2(adj3)
+        self.assertHierhorzer2(adj4)
+        self.assertHierhorzer2([[1],[2,4],[0,3],[6],[5],[1,2],[5]])
 
 if __name__=='__main__':
     unittest.main()

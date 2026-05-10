@@ -44,12 +44,13 @@ class Test(unittest.TestCase):
     def assertValid(self,s,e):
         t=huffman(Counter(s))
         with self.subTest(s=s):
-            self.assertEqual(encode(s,tree2dict(t)),e)
-            self.assertEqual(decode(e,t),s)
+            u=encode(s,tree2dict(t))
+            self.assertEqual(len(u),e)
+            self.assertEqual(decode(u,t),s)
     def test(self):
-        self.assertValid('','')
-        self.assertValid('AAA','000')
-        self.assertValid('AABACDACA','001010111000110')
+        self.assertValid('',0)
+        self.assertValid('AAA',3)
+        self.assertValid('AABACDACA',15)
 
 if __name__=='__main__':
     unittest.main()

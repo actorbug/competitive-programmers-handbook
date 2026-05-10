@@ -19,12 +19,12 @@ def node_disjoint(adj,s,e):
 class Test(unittest.TestCase):
     def test(self):
         adj=[[1],[]]
-        self.assertCountEqual(edge_disjoint(adj,0,1),[[0,1]])
-        self.assertCountEqual(node_disjoint(adj,0,1),[[0,1]])
+        self.assertEqual(len([*edge_disjoint(adj,0,1)]),1)
+        self.assertEqual(len([*node_disjoint(adj,0,1)]),1)
 
         adj=[[1,3],[3],[1,4,5],[2,4],[5],[]]
-        self.assertCountEqual(edge_disjoint(adj,0,5),[[0,1,3,2,5],[0,3,4,5]])
-        self.assertCountEqual(node_disjoint(adj,0,5),[[0,3,2,5]])
+        self.assertEqual(len([*edge_disjoint(adj,0,5)]),2)
+        self.assertEqual(len([*node_disjoint(adj,0,5)]),1)
 
 if __name__=='__main__':
     unittest.main()

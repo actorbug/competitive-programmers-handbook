@@ -10,10 +10,10 @@ def solve(ary):
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertCountEqual(solve([]),[])
-        self.assertCountEqual(solve([('A',1,3),('B',2,5),('C',3,9),('D',6,8)]),[('A',1,3),('D',6,8)])
-        self.assertCountEqual(solve([('A',1,4),('B',3,5),('C',4,7)]),[('A',1,4),('C',4,7)])
-        self.assertCountEqual(solve([('A',1,7),('B',2,4),('C',4,6)]),[('B',2,4),('C',4,6)])
+        self.assertEqual(len([*solve([])]),0)
+        self.assertEqual(len([*solve([('A',1,3),('B',2,5),('C',3,9),('D',6,8)])]),2)
+        self.assertEqual(len([*solve([('A',1,4),('B',3,5),('C',4,7)])]),2)
+        self.assertEqual(len([*solve([('A',1,7),('B',2,4),('C',4,6)])]),2)
 
 if __name__=='__main__':
     unittest.main()

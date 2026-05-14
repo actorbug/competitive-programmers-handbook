@@ -58,12 +58,14 @@ TEST(C081TwoPointersMethod, subarraySum) {
 }
 
 TEST(C081TwoPointersMethod, twoSumProblem) {
+	EXPECT_EQ(two_sum_problem({}, 0), make_pair(-1, -1));
 	EXPECT_EQ(two_sum_problem({ 1,4 }, 5), make_pair(0, 1));
 	EXPECT_EQ(two_sum_problem({ 1,4 }, 12), make_pair(-1, -1));
 	EXPECT_EQ(two_sum_problem({ 1,4,5,6,7,9,9,10 }, 12), make_pair(2, 4));
 }
 
 TEST(C081TwoPointersMethod, threeSumProblem) {
+	EXPECT_EQ(three_sum_problem({}, 0), make_tuple(-1, -1, -1));
 	EXPECT_EQ(three_sum_problem({ 1,4,5 }, 10), make_tuple(0, 1, 2));
 	EXPECT_EQ(three_sum_problem({ 1,4,5 }, 12), make_tuple(-1, -1, -1));
 	EXPECT_EQ(three_sum_problem({ 1,4,5,6,7,9,9,10 }, 12), make_tuple(0, 1, 4));

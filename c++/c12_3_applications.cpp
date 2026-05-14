@@ -2,27 +2,9 @@
 #include <gtest/gtest.h>
 using namespace std;
 using ll = long long;
+#include "c12_3_applications.h"
 
 namespace {
-	vector<vector<ll>> connected(const vector<vector<ll>>& adj) {
-		ll n = ssize(adj);
-		vector<bool> visited(n);
-		vector<vector<ll>> ret;
-		auto dfs = [&](this auto self, ll s) {
-			if (visited[s]) return;
-			visited[s] = true;
-			ret.back().push_back(s);
-			for (ll u : adj[s])
-				self(u);
-			};
-		for (ll i = 0; i < n; ++i)
-			if (!visited[i]) {
-				ret.resize(ret.size() + 1);
-				dfs(i);
-			}
-		return ret;
-	}
-
 	bool finding_cycles(const vector<vector<ll>>& adj) {
 		ll n = ssize(adj);
 		vector<bool> visited(n);
@@ -77,6 +59,25 @@ namespace {
 		}
 		return color;
 	}
+}
+
+vector<vector<ll>> connected(const vector<vector<ll>>& adj) {
+	ll n = ssize(adj);
+	vector<bool> visited(n);
+	vector<vector<ll>> ret;
+	auto dfs = [&](this auto self, ll s) {
+		if (visited[s]) return;
+		visited[s] = true;
+		ret.back().push_back(s);
+		for (ll u : adj[s])
+			self(u);
+		};
+	for (ll i = 0; i < n; ++i)
+		if (!visited[i]) {
+			ret.resize(ret.size() + 1);
+			dfs(i);
+		}
+	return ret;
 }
 
 TEST(C123Applications, connected) {

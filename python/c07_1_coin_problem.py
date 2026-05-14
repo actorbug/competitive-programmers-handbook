@@ -51,9 +51,10 @@ def solve4(coins,n):
             if x-c>=0 and value[x-c]+1<value[x]:
                 value[x]=value[x-c]+1
                 first[x]=c
-    while n>0:
-        yield first[n]
-        n-=first[n]
+    if value[n]<INF:
+        while n>0:
+            yield first[n]
+            n-=first[n]
 
 def solve5(coins,n,m):
     if n<0:
@@ -72,14 +73,22 @@ class Test(unittest.TestCase):
         coins=[1,3,4]
         for s in (solve,solve2,solve3):
             with self.subTest(s=s):
+                self.assertEqual(s([],0),0)
+                self.assertEqual(s([],1),INF)
+                self.assertEqual(s([5],3),INF)
                 self.assertEqual(s(coins,-1),INF)
                 self.assertEqual(s(coins,0),0)
                 self.assertEqual(s(coins,10),3)
-                self.assertEqual(s([5],3),INF)
+        self.assertCountEqual(solve4([],0),[])
+        self.assertCountEqual(solve4([],1),[])
+        self.assertCountEqual(solve4([5],3),[])
         self.assertCountEqual(solve4(coins,-1),[])
         self.assertCountEqual(solve4(coins,0),[])
         self.assertCountEqual(solve4(coins,10),[3,3,4])
         m=10**9+7
+        self.assertEqual(solve5([],0,m),1)
+        self.assertEqual(solve5([],1,m),0)
+        self.assertEqual(solve5([5],3,m),0)
         self.assertEqual(solve5(coins,-1,m),0)
         self.assertEqual(solve5(coins,0,m),1)
         self.assertEqual(solve5(coins,5,m),6)

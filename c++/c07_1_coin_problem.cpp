@@ -60,9 +60,11 @@ namespace {
 			}
 		}
 		vector<ll> ret;
-		while (n > 0) {
-			ret.push_back(first[n]);
-			n -= first[n];
+		if (value[n] < INF) {
+			while (n > 0) {
+				ret.push_back(first[n]);
+				n -= first[n];
+			}
 		}
 		return ret;
 	}
@@ -83,10 +85,12 @@ namespace {
 	}
 
 	void test(auto f) {
+		EXPECT_EQ(f({}, 0), 0);
+		EXPECT_EQ(f({}, 1), INF);
+		EXPECT_EQ(f({ 5 }, 3), INF);
 		EXPECT_EQ(f({ 1, 3, 4 }, -1), INF);
 		EXPECT_EQ(f({ 1, 3, 4 }, 0), 0);
 		EXPECT_EQ(f({ 1, 3, 4 }, 10), 3);
-		EXPECT_EQ(f({ 5 }, 3), INF);
 	}
 }
 
@@ -103,6 +107,9 @@ TEST(C071CoinProblem, solve3) {
 }
 
 TEST(C071CoinProblem, solve4) {
+	EXPECT_EQ(solve4({}, 0), vector<ll>{});
+	EXPECT_EQ(solve4({}, 1), vector<ll>{});
+	EXPECT_EQ(solve4({ 5 }, 3), vector<ll>{});
 	EXPECT_EQ(solve4({ 1, 3, 4 }, -1), vector<ll>{});
 	EXPECT_EQ(solve4({ 1, 3, 4 }, 0), vector<ll>{});
 	EXPECT_EQ(solve4({ 1, 3, 4 }, 10), (vector<ll>{3, 3, 4}));
@@ -110,6 +117,9 @@ TEST(C071CoinProblem, solve4) {
 
 TEST(C071CoinProblem, solve5) {
 	ll m = 1'000'000'007;
+	EXPECT_EQ(solve5({}, 0, m), 1);
+	EXPECT_EQ(solve5({}, 1, m), 0);
+	EXPECT_EQ(solve5({ 5 }, 3, m), 0);
 	EXPECT_EQ(solve5({ 1, 3, 4 }, -1, m), 0);
 	EXPECT_EQ(solve5({ 1, 3, 4 }, 0, m), 1);
 	EXPECT_EQ(solve5({ 1, 3, 4 }, 5, m), 6);

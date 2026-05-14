@@ -5,15 +5,18 @@ using ll = long long;
 constexpr ll INF = numeric_limits<ll>::max() / 2;
 
 namespace {
-	vector<ll> bellman_ford(ll n, const vector<tuple<ll, ll, ll>>& edges, ll x) {
+	vector<ll> bellman_ford(const vector<vector<pair<ll, ll>>>& adj, ll x) {
+		ll n = ssize(adj);
 		vector<ll> distance(n, INF);
 		distance[x] = 0;
 		for (ll i = 1; i <= n; ++i) {
 			bool changed = false;
-			for (auto [a, b, w] : edges) {
-				if (distance[b] > distance[a] + w) {
-					distance[b] = distance[a] + w;
-					changed = true;
+			for (ll a = 0; a < n; ++a) {
+				for (auto [b, w] : adj[a]) {
+					if (distance[b] > distance[a] + w) {
+						distance[b] = distance[a] + w;
+						changed = true;
+					}
 				}
 			}
 			if (!changed)
@@ -48,9 +51,9 @@ namespace {
 }
 
 TEST(C131BellmanFord, bellmanFord) {
-	EXPECT_EQ(bellman_ford(1, {}, 0), vector<ll>{0});
-	EXPECT_EQ(bellman_ford(5, { {0,1,5},{0,2,3},{0,3,7},{1,0,5},{1,3,3},{1,4,2},{2,0,3},{2,3,1},{3,0,7},{3,1,3},{3,2,1},{3,4,2},{4,1,2},{4,3,2} }, 0), (vector<ll>{0, 5, 3, 4, 6}));
-	EXPECT_EQ(bellman_ford(4, { {0,1,3},{0,2,5},{1,0,3},{1,2,2},{1,3,1},{2,0,5},{2,1,2},{2,3,-7},{3,1,1},{3,2,-7} }, 0), vector<ll>{});
+	EXPECT_EQ(bellman_ford({ {} }, 0), vector<ll>{0});
+	EXPECT_EQ(bellman_ford({ {{1,5},{2,3},{3,7}},{{0,5},{3,3},{4,2}},{{0,3},{3,1}},{{0,7},{1,3},{2,1},{4,2}},{{1,2},{3,2}} }, 0), (vector<ll>{0, 5, 3, 4, 6}));
+	EXPECT_EQ(bellman_ford({ {{1,3},{2,5}},{{0,3},{2,2},{3,1}},{{0,5},{1,2},{3,-7}},{{1,1},{2,-7}} }, 0), vector<ll>{});
 }
 
 TEST(C131BellmanFord, spfa) {

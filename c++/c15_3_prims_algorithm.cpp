@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 using namespace std;
 using ll = long long;
+#include "c12_3_applications.h"
 
 namespace {
 	vector<vector<pair<ll, ll>>> prim(const vector<vector<pair<ll, ll>>>& adj) {
@@ -29,7 +30,14 @@ namespace {
 TEST(C153PrimsAlgorithm, prim) {
 	EXPECT_EQ(prim({}), (vector<vector<pair<ll, ll>>>{}));
 	auto ret = prim({ {{1,3},{4,5}},{{0,3},{2,5},{4,6}},{{1,5},{3,9},{5,3}},{{2,9},{5,7}},{{0,5},{1,6},{5,2}},{{2,3},{3,7},{4,2}} });
-	for (auto& r : ret)
-		ranges::sort(r);
-	EXPECT_EQ(ret, (vector<vector<pair<ll, ll>>>{ {{1,3},{4,5}},{{0,3}},{{5,3}},{{5,7}},{{0,5},{5,2}},{{2,3},{3,7},{4,2}} }));
+	ll sum = 0;
+	for (const auto& v : ret)
+		for (auto [_, w] : v)
+			sum += w;
+	EXPECT_EQ(sum, 20 * 2);
+	vector<vector<ll>> adj(ret.size());
+	for (ll i = 0; i < ssize(ret); ++i)
+		for (auto [u, _] : ret[i])
+			adj[i].push_back(u);
+	EXPECT_EQ(connected(adj).size(), 1);
 }

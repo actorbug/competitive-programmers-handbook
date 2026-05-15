@@ -38,7 +38,7 @@ namespace {
 		vector<vector<vector<ll>>> ret;
 		do {
 			ret.push_back(prufre2tree(vec));
-		} while (nextProduct(vec, n));
+		} while (next_product(vec, n));
 		return ret;
 	}
 }

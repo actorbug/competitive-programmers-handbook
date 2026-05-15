@@ -5,28 +5,6 @@ using ll = long long;
 #include "c12_3_applications.h"
 
 namespace {
-	bool finding_cycles(const vector<vector<ll>>& adj) {
-		ll n = ssize(adj);
-		vector<bool> visited(n);
-		auto dfs = [&](this auto self, ll s, ll e) {
-			if (visited[s])
-				return true;
-			visited[s] = true;
-			for (ll u : adj[s]) {
-				if (u != e && self(u, s)) {
-					return true;
-				}
-			}
-			return false;
-			};
-		for (ll i = 0; i < n; ++i) {
-			if (!visited[i] && dfs(i, -1)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	bool finding_cycles2(const vector<vector<ll>>& adj) {
 		for (const auto& c : connected(adj)) {
 			ll sum = 0;
@@ -78,6 +56,28 @@ vector<vector<ll>> connected(const vector<vector<ll>>& adj) {
 			dfs(i);
 		}
 	return ret;
+}
+
+bool finding_cycles(const vector<vector<ll>>& adj) {
+	ll n = ssize(adj);
+	vector<bool> visited(n);
+	auto dfs = [&](this auto self, ll s, ll e) {
+		if (visited[s])
+			return true;
+		visited[s] = true;
+		for (ll u : adj[s]) {
+			if (u != e && self(u, s)) {
+				return true;
+			}
+		}
+		return false;
+		};
+	for (ll i = 0; i < n; ++i) {
+		if (!visited[i] && dfs(i, -1)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 TEST(C123Applications, connected) {

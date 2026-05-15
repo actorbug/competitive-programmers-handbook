@@ -22,7 +22,7 @@ namespace {
 	}
 
 	optional<pair<ll, ll>> existence2(const vector<vector<ll>>& adj) {
-		auto rev = reversedAdj(adj);
+		auto rev = reversed_adj(adj);
 		unordered_map<ll, vector<ll>> d;
 		for (ll i = 0; i < ssize(adj); ++i)
 			d[ssize(rev[i]) - ssize(adj[i])].push_back(i);

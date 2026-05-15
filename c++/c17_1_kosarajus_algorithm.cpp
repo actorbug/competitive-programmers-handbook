@@ -22,7 +22,7 @@ vector<ll> kosaraju(const vector<vector<ll>>& adj) {
 			dfs(adj, x, [&](ll u) { nodes.push_back(u); });
 		}
 	}
-	auto radj = reversedAdj(adj);
+	auto radj = reversed_adj(adj);
 	visited.assign(n, false);
 	vector<ll> ret(n);
 	for (ll count = 0; ll x : nodes | views::reverse) {

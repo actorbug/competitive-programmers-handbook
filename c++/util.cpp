@@ -31,7 +31,7 @@ ll comb(ll n, ll r) {
 	return ret;
 }
 
-bool nextProduct(vector<ll>& vec, ll n) {
+bool next_product(vector<ll>& vec, ll n) {
 	ll i;
 	for (i = ssize(vec) - 1; i >= 0; --i) {
 		ll j = (vec[i] + 1) % n;
@@ -42,7 +42,7 @@ bool nextProduct(vector<ll>& vec, ll n) {
 	return i >= 0;
 }
 
-vector<vector<ll>> reversedAdj(const vector<vector<ll>>& adj) {
+vector<vector<ll>> reversed_adj(const vector<vector<ll>>& adj) {
 	vector<vector<ll>> radj(adj.size());
 	for (ll i = 0; i < ssize(adj); ++i) {
 		for (ll j : adj[i]) {
@@ -50,4 +50,12 @@ vector<vector<ll>> reversedAdj(const vector<vector<ll>>& adj) {
 		}
 	}
 	return radj;
+}
+
+vector<vector<ll>> delweight(const vector<vector<pair<ll, ll>>>& adj) {
+	vector<vector<ll>> ret(adj.size());
+	for (ll i = 0; i < ssize(adj); ++i)
+		for (auto [v, _] : adj[i])
+			ret[i].push_back(v);
+	return ret;
 }

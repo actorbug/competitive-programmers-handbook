@@ -1,6 +1,7 @@
 import unittest
+from util import delweight
+from c12_3_applications import connected,finding_cycles
 from c15_2_union_find_structure import UnionFind
-from c12_3_applications import connected
 
 def kruskal(adj):
     ret=[[] for _ in adj]
@@ -23,8 +24,10 @@ class Test(unittest.TestCase):
             [(0,5),(1,6),(5,2)],
             [(2,3),(3,7),(4,2)]
         ])
-        self.assertEqual(sum(j[1] for i in ret for j in i),20*2)
-        self.assertEqual(len([*connected([[j[0] for j in i] for i in ret])]),1)
+        self.assertEqual(sum(w for r in ret for _,w in r),20*2)
+        adj=delweight(ret)
+        self.assertEqual(len([*connected(adj)]),1)
+        self.assertFalse(finding_cycles(adj))
 
 if __name__=='__main__':
     unittest.main()

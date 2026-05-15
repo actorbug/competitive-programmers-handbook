@@ -1,5 +1,6 @@
 import unittest
 import sys
+from util import reversed_adj
 
 sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
@@ -27,13 +28,6 @@ def kosaraju(adj):
                 ret[u]=count
             count+=1
     return ret
-
-def reversed_adj(adj):
-    radj=[[] for _ in adj]
-    for i,e in enumerate(adj):
-        for j in e:
-            radj[j].append(i)
-    return radj
 
 class Test(unittest.TestCase):
     def test(self):

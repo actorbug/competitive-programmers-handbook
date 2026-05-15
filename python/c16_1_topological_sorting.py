@@ -25,7 +25,11 @@ def topological(adj):
 class Test(unittest.TestCase):
     def test(self):
         self.assertEqual(topological([]),[])
-        self.assertEqual(topological([[1],[2],[5],[0,4],[1,2],[]]),[3,4,0,1,2,5])
+        adj=[[1],[2],[5],[0,4],[1,2],[]]
+        pos={v:i for i,v in enumerate(topological(adj))}
+        for a in range(len(adj)):
+            for b in adj[a]:
+                self.assertLess(pos[a],pos[b])
         self.assertIsNone(topological([[1],[2],[4,5],[0,4],[1],[]]))
 
 if __name__=='__main__':

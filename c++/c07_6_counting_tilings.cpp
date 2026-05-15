@@ -40,7 +40,7 @@ namespace {
 				}
 				if (sum > 0)
 					ndp[curr] = sum;
-			} while (nextProduct(vec, 4));
+			} while (next_product(vec, 4));
 			dp = move(ndp);
 		}
 		ll ans = 0;
@@ -91,7 +91,7 @@ namespace {
 				}
 				if (sum > 0)
 					ndp[curr] = sum;
-			} while (nextProduct(vec, 2));
+			} while (next_product(vec, 2));
 			dp = move(ndp);
 		}
 		ll ans = 0;

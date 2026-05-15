@@ -28,6 +28,14 @@ vector<ll> topological(const vector<vector<ll>>& adj) {
 
 TEST(C161TopologicalSorting, topological) {
 	EXPECT_EQ(topological({}), vector<ll>{});
-	EXPECT_EQ(topological({ {1},{2},{5},{0,4},{1,2},{} }), (vector<ll>{ 3,4,0,1,2,5}));
+	vector<vector<ll>> adj = { {1},{2},{5},{0,4},{1,2},{} };
+	unordered_map<ll, ll> pos;
+	for (auto [i, a] : topological(adj) | views::enumerate)
+		pos[a] = i;
+	for (ll a = 0; a < ssize(adj); ++a) {
+		for (ll b : adj[a]) {
+			EXPECT_LT(pos[a], pos[b]);
+		}
+	}
 	EXPECT_EQ(topological({ {1},{2},{4,5},{0,4},{1},{} }), vector<ll>{});
 }

@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 using namespace std;
 using ll = long long;
+#include "util.h"
 #include "c12_3_applications.h"
 #include "c15_2_union_find_structure.h"
 
@@ -34,9 +35,7 @@ TEST(C151KruskalsAlgorithm, kruskal) {
 		for (auto [_, w] : v)
 			sum += w;
 	EXPECT_EQ(sum, 20 * 2);
-	vector<vector<ll>> adj(ret.size());
-	for (ll i = 0; i < ssize(ret); ++i)
-		for (auto [u, _] : ret[i])
-			adj[i].push_back(u);
+	auto adj = delweight(ret);
 	EXPECT_EQ(connected(adj).size(), 1);
+	EXPECT_FALSE(finding_cycles(adj));
 }

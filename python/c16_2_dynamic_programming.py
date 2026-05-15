@@ -2,6 +2,7 @@ import unittest
 from heapq import heappush,heappop
 from collections import deque
 from graphlib import TopologicalSorter
+from util import delweight
 INF=1<<63
 
 def count_path(adj,a,b):
@@ -35,9 +36,6 @@ def dijkstra(adj,x):
                 distance[c]=distance[b]+w
                 heappush(q,(distance[c],b,c,w))
     return ret
-
-def delweight(adj):
-    return [[b for b,_ in e] for e in adj]
 
 class CoinProblem:
     def __init__(self,coins,x):

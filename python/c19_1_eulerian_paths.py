@@ -1,6 +1,6 @@
 import unittest
 from collections import defaultdict
-from c17_1_kosarajus_algorithm import reversed_adj
+from util import reversed_adj
 import sys
 from itertools import pairwise
 

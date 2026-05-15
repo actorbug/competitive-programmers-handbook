@@ -3,6 +3,7 @@
 using namespace std;
 using ll = long long;
 constexpr ll INF = numeric_limits<ll>::max() / 2;
+#include "util.h"
 #include "c16_1_topological_sorting.h"
 
 namespace {
@@ -17,24 +18,24 @@ namespace {
 		return paths[b];
 	}
 
-	vector<vector<ll>> dijkstra(const vector<vector<pair<ll, ll>>>& adj, ll x) {
+	vector<vector<pair<ll, ll>>> dijkstra(const vector<vector<pair<ll, ll>>>& adj, ll x) {
 		ll n = ssize(adj);
 		vector<bool> processed(n);
 		vector<ll> distance(n, INF);
-		priority_queue<tuple<ll, ll, ll>, vector<tuple<ll, ll, ll>>, greater<>> q;
-		vector<vector<ll>> ret(n);
+		priority_queue<tuple<ll, ll, ll, ll>, vector<tuple<ll, ll, ll, ll>>, greater<>> q;
+		vector<vector<pair<ll, ll>>> ret(n);
 		distance[x] = 0;
-		q.emplace(-1, -1, x);
+		q.emplace(-1, -1, x, -1);
 		while (!q.empty()) {
-			auto [d, a, b] = q.top(); q.pop();
+			auto [d, a, b, w] = q.top(); q.pop();
 			if (d == distance[b])
-				ret[a].push_back(b);
+				ret[a].emplace_back(b, w);
 			if (processed[b]) continue;
 			processed[b] = true;
 			for (auto [c, w] : adj[b]) {
 				if (distance[b] + w <= distance[c]) {
 					distance[c] = distance[b] + w;
-					q.emplace(distance[c], b, c);
+					q.emplace(distance[c], b, c, w);
 				}
 			}
 		}
@@ -78,8 +79,8 @@ TEST(C162DynamicProgramming, countPath) {
 }
 
 TEST(C162DynamicProgramming, dijkstra) {
-	EXPECT_EQ(count_path(dijkstra({ {} }, 0), 0, 0), 1);
-	EXPECT_EQ(count_path(dijkstra({ {{1,3},{2,5}},{{0,3},{2,2},{3,4},{4,8}},{{0,5},{1,2},{3,2}},{{1,4},{2,2},{4,1}},{{1,8},{3,1}} }, 0), 0, 4), 3);
+	EXPECT_EQ(count_path(delweight(dijkstra({ {} }, 0)), 0, 0), 1);
+	EXPECT_EQ(count_path(delweight(dijkstra({ {{1,3},{2,5}},{{0,3},{2,2},{3,4},{4,8}},{{0,5},{1,2},{3,2}},{{1,4},{2,2},{4,1}},{{1,8},{3,1}} }, 0)), 0, 4), 3);
 }
 
 TEST(C162DynamicProgramming, coinProblem) {

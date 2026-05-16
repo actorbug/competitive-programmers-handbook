@@ -5,7 +5,7 @@ using ll = long long;
 
 namespace {
 	template<class T, class U>
-	map<T, ll> grundy(const T& init, U func) {
+	map<T, ll> grundy(const vector<T>& states, U func) {
 		map<T, ll> cache;
 		auto rec = [&](this auto self, const T& s) -> ll {
 			if (cache.contains(s))
@@ -18,11 +18,12 @@ namespace {
 				}
 			}
 			};
-		rec(init);
+		for (const auto& s : states)
+			rec(s);
 		return cache;
 	}
 
-	vector<vector<ll>> grundy_maze(const pair<ll, ll>& init, const vector<string>& m) {
+	vector<vector<ll>> grundy_maze(const vector<string>& m) {
 		auto maze = [&](const pair<ll, ll>& s) {
 			auto [y, x] = s;
 			vector<pair<ll, ll>> ret;
@@ -38,8 +39,17 @@ namespace {
 			}
 			return ret;
 			};
-		vector<vector<ll>> r(m.size(), vector<ll>(m[0].size(), -1));
-		for (const auto& [p, v] : grundy(init, maze)) {
+		ll h = ssize(m), w = ssize(m[0]);
+		vector<vector<ll>> r(h, vector<ll>(w, -1));
+		vector<pair<ll, ll>> states;
+		for (ll i = 0; i < h; ++i) {
+			for (ll j = 0; j < w; ++j) {
+				if (m[i][j] != '#') {
+					states.emplace_back(i, j);
+				}
+			}
+		}
+		for (const auto& [p, v] : grundy(states, maze)) {
 			auto [y, x] = p;
 			r[y][x] = v;
 		}
@@ -48,9 +58,9 @@ namespace {
 }
 
 TEST(C253SpragueGrundyTheorem, grundy) {
-	EXPECT_EQ(grundy(5ll, [](ll s) { return vector<vector<ll>>{{},{0},{1},{0,1},{1,3},{1,4}}[s]; }), (map<ll, ll>{{0,0},{1,1},{3,2},{4,0},{5,2}}));
+	EXPECT_EQ(grundy<ll>({ 0,1,2,3,4,5 }, [](ll s) { return vector<vector<ll>>{{},{0},{1},{0,1},{1,3},{1,4}}[s]; }), (map<ll, ll>{{0,0},{1,1},{2,0},{3,2},{4,0},{5,2}}));
 }
 
 TEST(C253SpragueGrundyTheorem, grundyMaze) {
-	EXPECT_EQ(grundy_maze({4,4}, {"..#..","#...#","..#..","#....","....."}), (vector<vector<ll>>{{0,1,-1,0,-1},{-1,0,1,2,-1},{0,2,-1,1,0},{-1,3,0,4,1},{0,4,1,3,2}}));
+	EXPECT_EQ(grundy_maze({"..#..","#...#","..#..","#....","....."}), (vector<vector<ll>>{{0,1,-1,0,1},{-1,0,1,2,-1},{0,2,-1,1,0},{-1,3,0,4,1},{0,4,1,3,2}}));
 }

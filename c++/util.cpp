@@ -59,3 +59,13 @@ vector<vector<ll>> delweight(const vector<vector<pair<ll, ll>>>& adj) {
 			ret[i].push_back(v);
 	return ret;
 }
+
+bool equal_adj(const vector<vector<ll>>& adj1, const vector<vector<ll>>& adj2) {
+	if (adj1.size() != adj2.size())
+		return false;
+	for (const auto& [a1, a2] : views::zip(adj1, adj2)) {
+		if ((a1 | ranges::to<unordered_set>()) != (a2 | ranges::to<unordered_set>()))
+			return false;
+	}
+	return true;
+}

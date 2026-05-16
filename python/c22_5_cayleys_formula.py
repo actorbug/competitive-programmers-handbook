@@ -26,12 +26,12 @@ def prufre2tree(a):
     return adj
 
 def cayley(n):
-    for i in product(*(range(n) for _ in range(n-2))):
+    for i in product(range(n),repeat=n-2):
         yield prufre2tree(i)
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual(prufre2tree([3,3,1]),[[3],[3,4],[3],[0,2,1],[1]])
+        self.assertEqual([*map(set,prufre2tree([3,3,1]))],[{3},{3,4},{3},{0,1,2},{1}])
         self.assertEqual(len([*cayley(4)]), 4**(4-2))
 
 if __name__=='__main__':

@@ -44,7 +44,7 @@ namespace {
 }
 
 TEST(C225CayleysFormula, prufre2tree) {
-	EXPECT_EQ(prufre2tree({ 3,3,1 }), (vector<vector<ll>>{{3},{3,4},{3},{0,2,1},{1}}));
+	EXPECT_TRUE(equal_adj(prufre2tree({ 3,3,1 }), {{3},{3,4},{3},{0,2,1},{1}}));
 }
 
 TEST(C225CayleysFormula, cayley) {

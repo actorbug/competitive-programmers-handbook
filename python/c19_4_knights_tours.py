@@ -1,4 +1,5 @@
 import unittest
+from itertools import pairwise
 import sys
 
 sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
@@ -22,21 +23,22 @@ def warnsdorf(h,w,y=0,x=0):
     return [b[:w] for b in board[:h]] if dfs(y,x,1) else None
 
 class Test(unittest.TestCase):
+    def assertWarnsdorf(self,h,w,y=0,x=0):
+        with self.subTest(h=h,w=w,y=y,x=x):
+            ret=warnsdorf(h,w,y,x)
+            route=[(-2,-2)]*(h*w)
+            for i,r in enumerate(ret):
+                for j,v in enumerate(r):
+                    self.assertGreaterEqual(v,1)
+                    self.assertLessEqual(v,len(route))
+                    route[v-1]=i,j
+            self.assertEqual(route[0],(y,x))
+            for (i1,j1),(i2,j2) in pairwise(route):
+                self.assertEqual(set((abs(i1-i2),abs(j1-j2))),{1,2})
     def test(self):
-        self.assertEqual(warnsdorf(1,1),[[1]])
-        self.assertEqual(warnsdorf(4,3),[
-            [1,12,3],
-            [4,9,6],
-            [7,2,11],
-            [10,5,8]
-        ])
-        self.assertEqual(warnsdorf(5,5),[
-            [1,22,11,16,7],
-            [12,17,8,21,10],
-            [25,2,23,6,15],
-            [18,13,4,9,20],
-            [3,24,19,14,5]
-        ])
+        self.assertWarnsdorf(1,1)
+        self.assertWarnsdorf(4,3)
+        self.assertWarnsdorf(5,5)
 
 if __name__=='__main__':
     unittest.main()

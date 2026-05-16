@@ -35,9 +35,26 @@ namespace {
 		dfs(y, x, 1);
 		return board;
 	}
+
+	void test(ll h, ll w, ll y = 0, ll x = 0) {
+		auto ret = warnsdorf(h, w, y, x);
+		vector<pair<ll, ll>> route(h * w, { -2, -2 });
+		for (ll i = 0; i < h; ++i) {
+			for (ll j = 0; j < w; ++j) {
+				EXPECT_GE(ret[i][j], 1);
+				EXPECT_LE(ret[i][j], h * w);
+				route[ret[i][j] - 1] = { i, j };
+			}
+		}
+		EXPECT_EQ(route[0], make_pair(y, x));
+		for (const auto& [p, n] : route | views::pairwise) {
+			ll i = abs(p.first - n.first), j = abs(p.second - n.second);
+			EXPECT_TRUE(i == 1 && j == 2 || i == 2 && j == 1);
+		}
+	}
 }
 TEST(C194KnightsTours, warnsdorf) {
-	EXPECT_EQ(warnsdorf(1, 1), vector<vector<ll>>{{1}});
-	EXPECT_EQ(warnsdorf(4, 3), (vector<vector<ll>>{{1,8,3},{4,11,6},{7,2,9},{10,5,12}}));
-	EXPECT_EQ(warnsdorf(5, 5), (vector<vector<ll>>{{1,20,9,14,3},{10,15,2,19,24},{21,8,23,4,13},{16,11,6,25,18},{7,22,17,12,5}}));
+	test(1, 1);
+	test(4, 3);
+	test(5, 5);
 }

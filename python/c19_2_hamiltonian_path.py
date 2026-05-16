@@ -1,5 +1,5 @@
 import unittest
-from itertools import combinations
+from itertools import combinations,pairwise
 
 def ore(adj):
     n=len(adj)
@@ -18,21 +18,29 @@ def construction(adj):
                 if s&1<<i and dp[s^1<<i]&adj[i]:
                     dp[s]|=1<<i
     s=(1<<n)-1
+    prev=s
     while s:
         for i in range(n):
-            if dp[s]&1<<i:
+            if prev&dp[s]&1<<i:
                 break
         yield i
+        prev=adj[i]
         s^=1<<i
 
 class Test(unittest.TestCase):
+    def assertConstruction(self,adj):
+        with self.subTest(adj=adj):
+            ret=[*construction(adj)]
+            self.assertCountEqual(ret,range(len(adj)))
+            for i,j in pairwise(ret):
+                self.assertIn(j,adj[i])
     def test(self):
         adj=[[1,3],[0,2,4],[1,4],[0,4],[1,2,3]]
         self.assertTrue(ore([]))
         self.assertFalse(ore(adj))
 
-        self.assertEqual([*construction([])],[])
-        self.assertEqual([*construction(adj)],[0,1,2,3,4])
+        self.assertConstruction([])
+        self.assertConstruction(adj)
 
 if __name__=='__main__':
     unittest.main()

@@ -20,10 +20,21 @@ namespace {
 			ret.push_back(i % k);
 		return ret;
 	}
+
+	void test(ll n, ll k) {
+		auto ret = debrujin(n, k);
+		EXPECT_EQ(ret.size(), ipow(k, n) + n - 1);
+		if (n > 0) {
+			vector<ll> vec(n);
+			do {
+				EXPECT_TRUE(ranges::search(ret, vec).begin() != ret.end());
+			} while (next_product(vec, k));
+		}
+	}
 }
 
 TEST(C193DeBrujinSequences, debrujin) {
-	EXPECT_EQ(debrujin(0, 0), vector<ll>{});
-	EXPECT_EQ(debrujin(1, 3), (vector<ll>{ 0,1,2 }));
-	EXPECT_EQ(debrujin(3, 2), (vector<ll>{ 0,0,1,1,1,0,1,0,0,0 }));
+	test(0, 0);
+	test(1, 3);
+	test(3, 2);
 }

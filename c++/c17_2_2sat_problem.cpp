@@ -13,7 +13,12 @@ namespace {
 			adj[v1 ^ 1].push_back(v0);
 		}
 		vector<bool> solve() const {
-			auto connect = kosaraju(adj);
+			vector<ll> connect(adj.size());
+			for (ll count = 0; const auto& nodes : kosaraju(adj)) {
+				for (ll x : nodes)
+					connect[x] = count;
+				++count;
+			}
 			vector<bool> ret(adj.size() / 2);
 			for (ll i = 0; i < ssize(ret); ++i) {
 				if (connect[i * 2] == connect[i * 2 + 1])

@@ -1,3 +1,3 @@
 #pragma once
 
-vector<ll> kosaraju(const vector<vector<ll>>& adj);
+vector<vector<ll>> kosaraju(const vector<vector<ll>>& adj);

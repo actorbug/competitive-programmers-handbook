@@ -38,14 +38,24 @@ namespace {
 				}
 			}
 		}
-		ll s = (1ll << n) - 1;
+		ll s = (1ll << n) - 1, prev = s;
 		vector<ll> ret;
 		while (s) {
-			ll i = dp[s] & -dp[s];
-			ret.push_back(bit_width(ull(i)) - 1);
+			ll c = prev & dp[s], i = c & -c, j = bit_width(ull(i)) - 1;
+			ret.push_back(j);
+			prev = adj2[j];
 			s ^= i;
 		}
 		return ret;
+	}
+
+	void test(const vector<vector<ll>>& adj) {
+		auto ret = construction(adj);
+		for (auto [i, j] : ret | views::pairwise)
+			EXPECT_TRUE(ranges::find(adj[i], j) != adj[i].end());
+		ranges::sort(ret);
+		for (ll i = 0; i < ssize(ret); ++i)
+			EXPECT_EQ(ret[i], i);
 	}
 }
 
@@ -55,6 +65,6 @@ TEST(C192HamiltonianPath, ore) {
 }
 
 TEST(C192HamiltonianPath, construction) {
-	EXPECT_EQ(construction({}), vector<ll>{});
-	EXPECT_EQ(construction({ {1,3},{0,2,4},{1,4},{0,4},{1,2,3} }), (vector<ll>{ 0,1,2,3,4 }));
+	test({});
+	test({ {1,3},{0,2,4},{1,4},{0,4},{1,2,3} });
 }

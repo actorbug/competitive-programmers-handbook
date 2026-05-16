@@ -20,19 +20,17 @@ def kosaraju(adj):
             nodes+=dfs(adj,x)
     radj=reversed_adj(adj)
     visited=[False]*n
-    count=0
-    ret=[None]*n
     for x in reversed(nodes):
         if not visited[x]:
-            for u in dfs(radj,x):
-                ret[u]=count
-            count+=1
-    return ret
+            yield [*dfs(radj,x)]
 
 class Test(unittest.TestCase):
+    def assertKosaraju(self,adj,expected):
+        with self.subTest(adj=adj):
+            self.assertCountEqual((sorted(r) for r in kosaraju(adj)),expected)
     def test(self):
-        self.assertEqual(kosaraju([]),[])
-        self.assertEqual(kosaraju([[1,3],[0,4],[1,6],[],[3],[2,4],[5]]),[1,1,0,3,2,0,0])
+        self.assertKosaraju([], [])
+        self.assertKosaraju([[1,3],[0,4],[1,6],[],[3],[2,4],[5]],[[0,1],[2,5,6],[3],[4]])
 
 if __name__=='__main__':
     unittest.main()

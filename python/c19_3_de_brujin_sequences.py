@@ -1,4 +1,5 @@
 import unittest
+from itertools import product
 from c19_1_eulerian_paths import hierhorzer2
 
 def debrujin(n,k):
@@ -15,10 +16,15 @@ def debrujin(n,k):
         yield i%k
 
 class Test(unittest.TestCase):
+    def assertDebrujin(self,n,k):
+        with self.subTest(n=n,k=k):
+            ret=[*debrujin(n,k)]
+            self.assertEqual(len(ret),k**n+n-1)
+            self.assertEqual(set(tuple(ret[i:i+n]) for i in range(k**n)),set(product(range(k),repeat=n)))
     def test(self):
-        self.assertEqual([*debrujin(0,0)],[])
-        self.assertEqual([*debrujin(1,3)],[0,1,2])
-        self.assertEqual([*debrujin(3,2)],[0,0,0,1,0,1,1,1,0,0])
+        self.assertDebrujin(0,0)
+        self.assertDebrujin(1,3)
+        self.assertDebrujin(3,2)
 
 if __name__=='__main__':
     unittest.main()

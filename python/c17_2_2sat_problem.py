@@ -9,7 +9,10 @@ class TwoSatProblem:
         self.adj[v0^1].append(v1)
         self.adj[v1^1].append(v0)
     def solve(self):
-        connect=kosaraju(self.adj)
+        connect=[None]*len(self.adj)
+        for i,k in enumerate(kosaraju(self.adj)):
+            for l in k:
+                connect[l]=i
         ret=[False]*(len(self.adj)//2)
         for i in range(len(ret)):
             if connect[i*2]==connect[i*2+1]:

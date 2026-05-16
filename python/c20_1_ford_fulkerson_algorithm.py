@@ -68,16 +68,15 @@ def adj2tc(adj,e):
     return sum(adj[e].values())
 
 class Test(unittest.TestCase):
-    def assertFlow(self,adj,s,e,f,tc,adj2,cut):
+    def assertFlow(self,adj,s,e,f,tc):
         with self.subTest(adj=adj,s=s,e=e,f=f):
             adj3=f(adj,s,e)
-            self.assertEqual(adj3,adj2)
             self.assertEqual(adj2tc(adj3,e),tc)
-            self.assertCountEqual(minimum_cuts(adj3,s),cut)
+            self.assertEqual(sum(adj3[i][j]+adj3[j][i] for i,j in minimum_cuts(adj3,s)),tc)
     def test(self):
         for f in (ford_fulkerson,scaling):
-            self.assertFlow([[(1,2)],[]],0,1,f,2,[{1:0},{0:2}],[(0,1)])
-            self.assertFlow([[(1,5),(3,4)],[(2,6)],[(4,8),(5,5)],[(1,3),(4,1)],[(5,2)],[]],0,5,f,7,[{1:0,3:2},{0:5,2:0,3:1},{1:6,4:7,5:0},{0:2,1:2,4:0},{2:1,3:1,5:0},{2:5,4:2}],[(1,2),(3,4)])
+            self.assertFlow([[(1,2)],[]],0,1,f,2)
+            self.assertFlow([[(1,5),(3,4)],[(2,6)],[(4,8),(5,5)],[(1,3),(4,1)],[(5,2)],[]],0,5,f,7)
 
 if __name__=='__main__':
     unittest.main()

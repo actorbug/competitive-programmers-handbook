@@ -29,15 +29,28 @@ namespace {
 			ret += a * ms / m * modinv(ms / m, m);
 		return ret;
 	}
+
+	void test_diophantine(ll a, ll b, ll c) {
+		auto ret = diophantine(a, b, c);
+		ASSERT_TRUE(ret);
+		auto [x, y] = *ret;
+		EXPECT_EQ(a * x + b * y, c);
+	}
+
+	void test_chinese(const vector<pair<ll, ll>>& xs) {
+		ll x = chinese(xs);
+		for (auto [a, m] : xs)
+			EXPECT_EQ(x % m, a);
+	}
 }
 
 TEST(C213SolvingEquations, diophantine) {
-	EXPECT_EQ(diophantine(1, 1, 1), make_pair(0, 1));
-	EXPECT_EQ(diophantine(5, 2, 11), make_pair(11, -22));
-	EXPECT_EQ(diophantine(39, 15, 12), make_pair(8, -20));
+	test_diophantine(1, 1, 1);
+	test_diophantine(5, 2, 11);
+	test_diophantine(39, 15, 12);
 }
 
 TEST(C213SolvingEquations, chinese) {
-	EXPECT_EQ(chinese({{1,2}}), 1);
-	EXPECT_EQ(chinese({{3,5},{4,7},{2,3}}), 263);
+	test_chinese({{1,2}});
+	test_chinese({{3,5},{4,7},{2,3}});
 }

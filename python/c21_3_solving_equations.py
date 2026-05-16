@@ -19,12 +19,21 @@ def chinese(xs):
     return sum(a*ms//m*pow(ms//m,-1,m) for a,m in xs)
 
 class Test(unittest.TestCase):
+    def assertDiophantine(self,a,b,c):
+        with self.subTest(a=a,b=b,c=c):
+            x,y=diophantine(a,b,c)
+            self.assertEqual(a*x+b*y,c)
+    def assertChinese(self,xs):
+        with self.subTest(xs=xs):
+            x=chinese(xs)
+            for a,m in xs:
+                self.assertEqual(x%m,a)
     def test(self):
-        self.assertEqual(diophantine(1,1,1),(0,1))
-        self.assertEqual(diophantine(5,2,11),(11,-22))
-        self.assertEqual(diophantine(39,15,12),(8,-20))
-        self.assertEqual(chinese([(1,2)]),1)
-        self.assertEqual(chinese([(3,5),(4,7),(2,3)]),263)
+        self.assertDiophantine(1,1,1)
+        self.assertDiophantine(5,2,11)
+        self.assertDiophantine(39,15,12)
+        self.assertChinese([(1,2)])
+        self.assertChinese([(3,5),(4,7),(2,3)])
 
 if __name__=='__main__':
     unittest.main()

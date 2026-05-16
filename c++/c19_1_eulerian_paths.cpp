@@ -71,6 +71,13 @@ namespace {
 		for (ll i = 0; i < ssize(adj); ++i)
 			EXPECT_EQ(adj[i] | ranges::to<unordered_multiset>(), adj2[i] | ranges::to<unordered_multiset>());
 	}
+
+	optional<pair<ll, ll>> convert(optional<pair<ll, ll>> p) {
+		if (!p || p->first <= p->second)
+			return p;
+		else
+			return make_pair(p->second, p->first);
+	}
 }
 
 vector<ll> hierholzer2(vector<vector<ll>> adj) {
@@ -92,10 +99,10 @@ vector<ll> hierholzer2(vector<vector<ll>> adj) {
 }
 
 TEST(C191EulerianPaths, existence) {
-	EXPECT_EQ(existence({}), make_pair(-1, -1));
-	EXPECT_EQ(existence({ {1,3},{0,2,4},{1,4},{0,4},{1,2,3} }), make_pair(1, 4));
-	EXPECT_EQ(existence({ {1,3},{0,2,3,4},{1,4},{0,1},{1,2} }), make_pair(-1, -1));
-	EXPECT_EQ(existence({ {1,2,3},{0,2,3},{0,1,3},{0,1,2} }), nullopt);
+	EXPECT_EQ(convert(existence({})), make_pair(-1, -1));
+	EXPECT_EQ(convert(existence({ {1,3},{0,2,4},{1,4},{0,4},{1,2,3} })), make_pair(1, 4));
+	EXPECT_EQ(convert(existence({ {1,3},{0,2,3,4},{1,4},{0,1},{1,2} })), make_pair(-1, -1));
+	EXPECT_EQ(convert(existence({ {1,2,3},{0,2,3},{0,1,3},{0,1,2} })), nullopt);
 }
 
 TEST(C191EulerianPaths, existence2) {

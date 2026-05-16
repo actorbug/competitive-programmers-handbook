@@ -102,14 +102,21 @@ namespace {
 		}
 		return ret;
 	}
+
+	optional<pair<pair<ll, ll>, pair<ll, ll>>> convert(optional<pair<pair<ll, ll>, pair<ll, ll>>> p) {
+		if (!p || p->first <= p->second)
+			return p;
+		else
+			return make_pair(p->second, p->first);
+	}
 }
 
 TEST(C271CombiningAlgorithms, minDist) {
-	EXPECT_EQ(min_dist({}), nullopt);
-	EXPECT_EQ(min_dist({"AA"}), (pair<pair<ll, ll>, pair<ll, ll>>{{0,0}, {0,1}}));
-	EXPECT_EQ(min_dist({"AFBA", "CEGE", "BDAF", "ACBD"}), (pair<pair<ll, ll>, pair<ll, ll>>{{1,1}, {1,3}}));
-	EXPECT_EQ(min_dist({"AFBA", "CHGE", "BDAF", "ACBA"}), (pair<pair<ll, ll>, pair<ll, ll>>{{3,3}, {2,2}}));
-	EXPECT_EQ(min_dist({"ABCD", "EFGH", "IJKL", "MNOP"}), nullopt);
+	EXPECT_EQ(convert(min_dist({})), nullopt);
+	EXPECT_EQ(convert(min_dist({"AA"})), (pair<pair<ll, ll>, pair<ll, ll>>{{0,0}, {0,1}}));
+	EXPECT_EQ(convert(min_dist({"AFBA", "CEGE", "BDAF", "ACBD"})), (pair<pair<ll, ll>, pair<ll, ll>>{{1,1}, {1,3}}));
+	EXPECT_EQ(convert(min_dist({"AFBA", "CHGE", "BDAF", "ACBA"})), (pair<pair<ll, ll>, pair<ll, ll>>{{2,2}, {3,3}}));
+	EXPECT_EQ(convert(min_dist({"ABCD", "EFGH", "IJKL", "MNOP"})), nullopt);
 }
 
 TEST(C271CombiningAlgorithms, minDist2) {

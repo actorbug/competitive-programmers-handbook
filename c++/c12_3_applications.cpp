@@ -37,6 +37,10 @@ namespace {
 		}
 		return color;
 	}
+
+	multiset<multiset<ll>> convert(const vector<vector<ll>>& vec) {
+		return vec | views::transform([](const auto& v) { return v | ranges::to<multiset>(); }) | ranges::to<multiset>();
+	}
 }
 
 vector<vector<ll>> connected(const vector<vector<ll>>& adj) {
@@ -81,9 +85,9 @@ bool finding_cycles(const vector<vector<ll>>& adj) {
 }
 
 TEST(C123Applications, connected) {
-	EXPECT_EQ(connected({}), vector<vector<ll>>{});
-	EXPECT_EQ(connected({ {} }), vector<vector<ll>>{{0}});
-	EXPECT_EQ(connected({ {2,3},{4},{0,3},{0,2},{1} }), (vector<vector<ll>>{{0,2,3},{1,4}}));
+	EXPECT_EQ(convert(connected({})), multiset<multiset<ll>>{});
+	EXPECT_EQ(convert(connected({ {} })), multiset<multiset<ll>>{{0}});
+	EXPECT_EQ(convert(connected({ {2,3},{4},{0,3},{0,2},{1} })), (multiset<multiset<ll>>{{0,2,3},{1,4}}));
 }
 
 TEST(C123Applications, findingCycles) {

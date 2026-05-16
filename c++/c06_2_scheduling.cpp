@@ -23,11 +23,19 @@ namespace {
 		}
 		return ret;
 	}
+
+	void test(const vector<record>& ary, ll l) {
+		auto ret = solve(ary);
+		EXPECT_EQ(ret.size(), l);
+		ranges::sort(ret, {}, &record::start);
+		for (const auto& [a, b] : ret | views::pairwise)
+			EXPECT_LE(a.end, b.start);
+	}
 }
 
 TEST(C062Scheduling, solve) {
-	EXPECT_EQ(solve({}).size(), 0);
-	EXPECT_EQ(solve({ {"A",1,3},{"B",2,5},{"C",3,9},{"D",6,8} }).size(), 2);
-	EXPECT_EQ(solve({ {"A",1,4},{"B",3,5},{"C",4,7} }).size(), 2);
-	EXPECT_EQ(solve({ {"A",1,7},{"B",2,4},{"C",4,6} }).size(), 2);
+	test({}, 0);
+	test({ {"A",1,3},{"B",2,5},{"C",3,9},{"D",6,8} }, 2);
+	test({ {"A",1,4},{"B",3,5},{"C",4,7} }, 2);
+	test({ {"A",1,7},{"B",2,4},{"C",4,6} }, 2);
 }

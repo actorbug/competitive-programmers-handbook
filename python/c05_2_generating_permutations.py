@@ -8,7 +8,7 @@ def method1(n):
     permutation,chosen=[],[False]*n
     def search():
         if len(permutation)==n:
-            yield permutation[:]
+            yield tuple(permutation)
         else:
             for i in range(n):
                 if chosen[i]:
@@ -27,8 +27,8 @@ class Test(unittest.TestCase):
     def test(self):
         for m in (method1,method2):
             with self.subTest(m=m):
-                self.assertCountEqual(map(list,m(0)),[[]])
-                self.assertCountEqual(map(list,m(3)),[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]])
+                self.assertCountEqual(m(0),[()])
+                self.assertCountEqual(m(3),[(0,1,2),(0,2,1),(1,0,2),(1,2,0),(2,0,1),(2,1,0)])
 
 if __name__=='__main__':
     unittest.main()

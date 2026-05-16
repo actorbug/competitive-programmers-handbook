@@ -41,8 +41,7 @@ namespace {
 	EXPECT_EQ(ret, vector<vector<ll>>{{}});\
 	ret.clear();\
 	f(3, [&](const auto& v) { ret.push_back(v); });\
-	ranges::sort(ret);\
-	EXPECT_EQ(ret, (vector<vector<ll>>{{ 0, 1, 2 }, { 0, 2, 1 }, { 1, 0, 2 }, { 1, 2, 0 }, { 2, 0, 1 }, { 2, 1, 0 }}));\
+	EXPECT_EQ(ret | ranges::to<multiset>(), (multiset<vector<ll>>{{ 0, 1, 2 }, { 0, 2, 1 }, { 1, 0, 2 }, { 1, 2, 0 }, { 2, 0, 1 }, { 2, 1, 0 }}));\
 } while(0)
 
 TEST(C052GeneratingPermutations, method1) {

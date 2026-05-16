@@ -39,8 +39,7 @@ namespace {
 	EXPECT_EQ(ret, vector<vector<ll>>{{}});\
 	ret.clear();\
 	f(3, [&](const auto& v) { ret.push_back(v); });\
-	ranges::sort(ret);\
-	EXPECT_EQ(ret, (vector<vector<ll>>{{}, { 0 }, { 0, 1 }, { 0, 1, 2 }, { 0, 2 }, { 1 }, { 1, 2 }, { 2 }}));\
+	EXPECT_EQ(ret | ranges::to<multiset>(), (multiset<vector<ll>>{{}, { 0 }, { 0, 1 }, { 0, 1, 2 }, { 0, 2 }, { 1 }, { 1, 2 }, { 2 }}));\
 } while(0)
 
 TEST(C051GeneratingSubsets, method1) {

@@ -6,12 +6,8 @@ using ll = long long;
 #include "util.h"
 
 namespace {
-	void test(const vector<vector<ll>>& adj, const vector<vector<ll>>& expected) {
-		auto ret = kosaraju(adj);
-		for (auto& r : ret)
-			ranges::sort(r);
-		ranges::sort(ret);
-		EXPECT_EQ(ret, expected);
+	multiset<multiset<ll>> convert(const vector<vector<ll>>& vec) {
+		return vec | views::transform([](const auto& v) { return v | ranges::to<multiset>(); }) | ranges::to<multiset>();
 	}
 }
 
@@ -45,6 +41,6 @@ vector<vector<ll>> kosaraju(const vector<vector<ll>>& adj) {
 }
 
 TEST(C171KosarajusAlgorithm, kosaraju) {
-	test({}, {});
-	test({ {1,3},{0,4},{1,6},{},{3},{2,4},{5} }, { {0,1},{2,5,6},{3},{4} });
+	EXPECT_EQ(convert(kosaraju({})), multiset<multiset<ll>>{});
+	EXPECT_EQ(convert(kosaraju({ {1,3},{0,4},{1,6},{},{3},{2,4},{5} })), (multiset<multiset<ll>>{ {0,1},{2,5,6},{3},{4} }));
 }

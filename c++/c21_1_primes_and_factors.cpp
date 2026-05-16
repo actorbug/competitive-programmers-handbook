@@ -93,13 +93,13 @@ TEST(C211PrimesAndFactors, prime) {
 }
 
 TEST(C211PrimesAndFactors, factors) {
-	EXPECT_EQ(factors(1), vector<ll>{});
-	EXPECT_EQ(factors(84), (vector<ll>{2,2,3,7}));
+	EXPECT_EQ(factors(1) | ranges::to<multiset>(), multiset<ll>{});
+	EXPECT_EQ(factors(84) | ranges::to<multiset>(), (multiset<ll>{2, 2, 3, 7}));
 }
 
 TEST(C211PrimesAndFactors, factorsE) {
-	EXPECT_EQ(factors_e(1), (vector<pair<ll, ll>>{}));
-	EXPECT_EQ(factors_e(84), (vector<pair<ll, ll>>{{2,2},{3,1},{7,1}}));
+	EXPECT_EQ(factors_e(1) | ranges::to<multiset>(), (multiset<pair<ll, ll>>{}));
+	EXPECT_EQ(factors_e(84) | ranges::to<multiset>(), (multiset<pair<ll, ll>>{{2, 2}, {3,1}, {7,1}}));
 }
 
 TEST(C211PrimesAndFactors, factorCount) {

@@ -107,12 +107,12 @@ TEST(C071CoinProblem, solve3) {
 }
 
 TEST(C071CoinProblem, solve4) {
-	EXPECT_EQ(solve4({}, 0), vector<ll>{});
-	EXPECT_EQ(solve4({}, 1), vector<ll>{});
-	EXPECT_EQ(solve4({ 5 }, 3), vector<ll>{});
-	EXPECT_EQ(solve4({ 1, 3, 4 }, -1), vector<ll>{});
-	EXPECT_EQ(solve4({ 1, 3, 4 }, 0), vector<ll>{});
-	EXPECT_EQ(solve4({ 1, 3, 4 }, 10), (vector<ll>{3, 3, 4}));
+	EXPECT_EQ(solve4({}, 0) | ranges::to<multiset>(), multiset<ll>{});
+	EXPECT_EQ(solve4({}, 1) | ranges::to<multiset>(), multiset<ll>{});
+	EXPECT_EQ(solve4({ 5 }, 3) | ranges::to<multiset>(), multiset<ll>{});
+	EXPECT_EQ(solve4({ 1, 3, 4 }, -1) | ranges::to<multiset>(), multiset<ll>{});
+	EXPECT_EQ(solve4({ 1, 3, 4 }, 0) | ranges::to<multiset>(), multiset<ll>{});
+	EXPECT_EQ(solve4({ 1, 3, 4 }, 10) | ranges::to<multiset>(), (multiset<ll>{3, 3, 4}));
 }
 
 TEST(C071CoinProblem, solve5) {

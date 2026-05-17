@@ -21,7 +21,7 @@ def string_construction(s,d):
     dh={Preprocessing.hash(i) for i in d}
     dp=set(map(len,d))
     for i in range(1,len(s)+1):
-        count.append(sum(count[i-j] for j in dp if i>=j and sh[i-j:i] in dh and s[i-j:i] in d))
+        count.append(sum(count[i-j] for j in dp if i>=j and sh.subhash(i-j,i) in dh and s[i-j:i] in d))
     return count[-1]
 
 class Test(unittest.TestCase):

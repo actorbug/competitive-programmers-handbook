@@ -17,15 +17,13 @@ class Preprocessing:
         return isinstance(o,Preprocessing) and self.s==o.s
     def __len__(self):
         return len(self.s)
-    def __getitem__(self,s):
-        if not isinstance(s,slice):
-            s=slice(s,s+1)
-        return (self.h[s.start]*self.p[s.stop-s.start]%b+self.h[s.stop])%b
+    def subhash(self,l,r):
+        return (self.h[l]*self.p[r-l]%b+self.h[r])%b
     def __lt__(self,o):
         ok,ng=0,min(len(self),len(o))+1
         while ng-ok>1:
             mid=(ok+ng)//2
-            if self[0:mid]==o[0:mid]:
+            if self.subhash(0,mid)==o.subhash(0,mid):
                 ok=mid
             else:
                 ng=mid
@@ -33,7 +31,7 @@ class Preprocessing:
     def find(self,t):
         n,ht=len(t),self.hash(t)
         for i in range(len(self.s)-n+1):
-            if self[i:i+n]==ht and self.s[i:i+n]==t:
+            if self.subhash(i,i+n)==ht and self.s[i:i+n]==t:
                 return i
         return None
     @classmethod
@@ -45,8 +43,8 @@ class Test(unittest.TestCase):
         p=Preprocessing('ALLEY')
         self.assertEqual(p.h,[0,65,77,16,20,52])
         self.assertEqual(p.p,[96,94,88,70,16,48])
-        self.assertEqual(p[0],65)
-        self.assertEqual(p[0:2],77)
+        self.assertEqual(p.subhash(0,1),65)
+        self.assertEqual(p.subhash(0,2),77)
         self.assertEqual(Preprocessing('').find(''),0)
         self.assertEqual(Preprocessing('ABABCBABC').find('ABC'),2)
         self.assertIsNone(Preprocessing('ABABCBABC').find('XXX'))

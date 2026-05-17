@@ -41,10 +41,14 @@ namespace {
 		} while (next_product(vec, n));
 		return ret;
 	}
+
+	vector<multiset<ll>> convert(const vector<vector<ll>>& adj) {
+		return adj | views::transform([](const auto& a) { return a | ranges::to<multiset>(); }) | ranges::to<vector>();
+	}
 }
 
 TEST(C225CayleysFormula, prufre2tree) {
-	EXPECT_TRUE(equal_adj(prufre2tree({ 3,3,1 }), {{3},{3,4},{3},{0,2,1},{1}}));
+	EXPECT_EQ(convert(prufre2tree({ 3,3,1 })), (vector<multiset<ll>>{{3},{3,4},{3},{0,1,2},{1}}));
 }
 
 TEST(C225CayleysFormula, cayley) {

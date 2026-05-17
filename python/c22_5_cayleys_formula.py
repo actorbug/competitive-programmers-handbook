@@ -31,7 +31,7 @@ def cayley(n):
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual([*map(set,prufre2tree([3,3,1]))],[{3},{3,4},{3},{0,1,2},{1}])
+        self.assertEqual([*map(sorted,prufre2tree([3,3,1]))],[[3],[3,4],[3],[0,1,2],[1]])
         self.assertEqual(len([*cayley(4)]), 4**(4-2))
 
 if __name__=='__main__':

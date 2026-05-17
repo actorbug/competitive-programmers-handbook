@@ -4,6 +4,19 @@ using namespace std;
 using ll = long long;
 #include "c16_1_topological_sorting.h"
 
+namespace {
+	void test(const vector<vector<ll>>& adj) {
+		unordered_map<ll, ll> pos;
+		for (auto [i, a] : topological(adj) | views::enumerate)
+			pos[a] = i;
+		for (ll a = 0; a < ssize(adj); ++a) {
+			for (ll b : adj[a]) {
+				EXPECT_LT(pos[a], pos[b]);
+			}
+		}
+	}
+}
+
 vector<ll> topological(const vector<vector<ll>>& adj) {
 	ll n = ssize(adj);
 	vector<ll> visited(n), ret;
@@ -27,15 +40,7 @@ vector<ll> topological(const vector<vector<ll>>& adj) {
 }
 
 TEST(C161TopologicalSorting, topological) {
-	EXPECT_EQ(topological({}), vector<ll>{});
-	vector<vector<ll>> adj = { {1},{2},{5},{0,4},{1,2},{} };
-	unordered_map<ll, ll> pos;
-	for (auto [i, a] : topological(adj) | views::enumerate)
-		pos[a] = i;
-	for (ll a = 0; a < ssize(adj); ++a) {
-		for (ll b : adj[a]) {
-			EXPECT_LT(pos[a], pos[b]);
-		}
-	}
+	test({});
+	test({ {1},{2},{5},{0,4},{1,2},{} });
 	EXPECT_EQ(topological({ {1},{2},{4,5},{0,4},{1},{} }), vector<ll>{});
 }

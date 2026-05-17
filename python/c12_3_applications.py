@@ -48,9 +48,9 @@ def bipartiteness_check(adj):
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertCountEqual(map(set,connected([])),[])
-        self.assertCountEqual(map(set,connected([[]])),[{0}])
-        self.assertCountEqual(map(set,connected([[2,3],[4],[0,3],[0,2],[1]])),[{0,2,3},{1,4}])
+        self.assertCountEqual(map(sorted,connected([])),[])
+        self.assertCountEqual(map(sorted,connected([[]])),[[0]])
+        self.assertCountEqual(map(sorted,connected([[2,3],[4],[0,3],[0,2],[1]])),[[0,2,3],[1,4]])
         self.assertEqual(finding_cycles([]),False)
         self.assertEqual(finding_cycles([[2,3],[2,4],[0,1,3,4],[0,2],[1,2]]),True)
         self.assertEqual(finding_cycles2([]),False)

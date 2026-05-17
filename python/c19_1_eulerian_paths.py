@@ -64,15 +64,13 @@ class Test(unittest.TestCase):
             for i,j in pairwise(hierhorzer(adj)):
                 adj2[i].append(j)
                 adj2[j].append(i)
-            for i,j in zip(adj,adj2):
-                self.assertEqual(sorted(i), sorted(j))
+            self.assertEqual([*map(sorted,adj2)],adj)
     def assertHierhorzer2(self,adj):
         with self.subTest(adj=adj):
             adj2=[[] for _ in adj]
             for i,j in pairwise(hierhorzer2(adj)):
                 adj2[i].append(j)
-            for i,j in zip(adj,adj2):
-                self.assertEqual(sorted(i), sorted(j))
+            self.assertEqual([*map(sorted,adj2)],adj)
     def test(self):
         adj1=[[1,3],[0,2,4],[1,4],[0,4],[1,2,3]]
         adj2=[[1,3],[0,2,3,4],[1,4],[0,1],[1,2]]

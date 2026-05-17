@@ -23,13 +23,15 @@ def topological(adj):
     return ret
 
 class Test(unittest.TestCase):
+    def assertTopological(self,adj):
+        with self.subTest(adj=adj):
+            pos={v:i for i,v in enumerate(topological(adj))}
+            for a in range(len(adj)):
+                for b in adj[a]:
+                    self.assertLess(pos[a],pos[b])
     def test(self):
-        self.assertEqual(topological([]),[])
-        adj=[[1],[2],[5],[0,4],[1,2],[]]
-        pos={v:i for i,v in enumerate(topological(adj))}
-        for a in range(len(adj)):
-            for b in adj[a]:
-                self.assertLess(pos[a],pos[b])
+        self.assertTopological([])
+        self.assertTopological([[1],[2],[5],[0,4],[1,2],[]])
         self.assertIsNone(topological([[1],[2],[4,5],[0,4],[1],[]]))
 
 if __name__=='__main__':

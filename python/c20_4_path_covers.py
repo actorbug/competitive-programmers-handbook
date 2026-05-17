@@ -1,4 +1,5 @@
 import unittest
+from itertools import pairwise
 from c13_3_floyd_warshall_algorithm import INF,floyd_warshall
 from c20_3_maximum_matchings import maximum_matching
 
@@ -41,14 +42,30 @@ def general(adj):
     return con.routes()
 
 class Test(unittest.TestCase):
+    def assertNodeDisjoint(self,adj,l):
+        with self.subTest(adj=adj):
+            ret=[*node_disjoint(adj)]
+            self.assertEqual(len(ret),l)
+            self.assertCountEqual((a for r in ret for a in r), range(len(adj)))
+            for r in ret:
+                for a,b in pairwise(r):
+                    self.assertIn(b,adj[a])
+    def assertGeneral(self,adj,l):
+        with self.subTest(adj=adj):
+            ret=[*general(adj)]
+            self.assertEqual(len(ret),l)
+            self.assertCountEqual(set(a for r in ret for a in r), range(len(adj)))
+            for r in ret:
+                for a,b in pairwise(r):
+                    self.assertIn(b,adj[a])
     def test(self):
         adj=[[1],[]]
-        self.assertEqual(len([*node_disjoint(adj)]),1)
-        self.assertEqual(len([*general(adj)]),1)
+        self.assertNodeDisjoint(adj,1)
+        self.assertGeneral(adj,1)
 
         adj=[[4],[5],[3],[],[5],[2,6],[]]
-        self.assertEqual(len([*node_disjoint(adj)]),3)
-        self.assertEqual(len([*general(adj)]),2)
+        self.assertNodeDisjoint(adj,3)
+        self.assertGeneral(adj,2)
 
 if __name__=='__main__':
     unittest.main()

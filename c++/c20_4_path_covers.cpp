@@ -79,14 +79,42 @@ namespace {
 		}
 		return con.routes();
 	}
+
+	void test_node_disjoint(const vector<vector<ll>>& adj, ll l) {
+		auto ret = node_disjoint(adj);
+		EXPECT_EQ(ret.size(), l);
+		unordered_multiset<ll> all;
+		for (const auto& r : ret)
+			all.insert(r.begin(), r.end());
+		EXPECT_EQ(all, views::iota(0ll, ll(ssize(adj))) | ranges::to<unordered_multiset>());
+		for (const auto& r : ret) {
+			for (auto [a, b] : r | views::pairwise) {
+				EXPECT_TRUE(ranges::find(adj[a], b) != adj[a].end());
+			}
+		}
+	}
+
+	void test_general(const vector<vector<ll>>& adj, ll l) {
+		auto ret = general(adj);
+		EXPECT_EQ(ret.size(), l);
+		unordered_set<ll> all;
+		for (const auto& r : ret)
+			all.insert(r.begin(), r.end());
+		EXPECT_EQ(all, views::iota(0ll, ll(ssize(adj))) | ranges::to<unordered_set>());
+		for (const auto& r : ret) {
+			for (auto [a, b] : r | views::pairwise) {
+				EXPECT_TRUE(ranges::find(adj[a], b) != adj[a].end());
+			}
+		}
+	}
 }
 
 TEST(C204PathCovers, nodeDisjoint) {
-	EXPECT_EQ(node_disjoint({{1},{}}).size(), 1);
-	EXPECT_EQ(node_disjoint({{4},{5},{3},{},{5},{2,6},{}}).size(), 3);
+	test_node_disjoint({{1},{}}, 1);
+	test_node_disjoint({{4},{5},{3},{},{5},{2,6},{}}, 3);
 }
 
 TEST(C204PathCovers, general) {
-	EXPECT_EQ(general({{1},{}}).size(), 1);
-	EXPECT_EQ(general({{4},{5},{3},{},{5},{2,6},{}}).size(), 2);
+	test_general({{1},{}}, 1);
+	test_general({{4},{5},{3},{},{5},{2,6},{}}, 2);
 }

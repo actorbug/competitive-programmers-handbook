@@ -43,7 +43,7 @@ namespace {
 	}
 
 	vector<multiset<ll>> convert(const vector<vector<ll>>& adj) {
-		return adj | views::transform([](const auto& a) { return a | ranges::to<multiset>(); }) | ranges::to<vector>();
+		return adj | views::transform(ranges::to<multiset>()) | ranges::to<vector>();
 	}
 }
 
@@ -52,5 +52,22 @@ TEST(C225CayleysFormula, prufre2tree) {
 }
 
 TEST(C225CayleysFormula, cayley) {
-	EXPECT_EQ(cayley(4).size(), ipow(4, 4 - 2));
+	EXPECT_EQ(cayley(4) | views::transform([](const auto& c) { return c | views::transform(ranges::to<multiset>()) | ranges::to<vector>(); }) | ranges::to<multiset>(), (multiset<vector<multiset<ll>>>{
+		{{1,2,3},{0},{0},{0}},
+		{{1},{0,2,3},{1},{1}},
+		{{2},{2},{0,1,3},{2}},
+		{{3},{3},{3},{0,1,2}},
+		{{1},{0,2},{1,3},{2}},
+		{{1},{0,3},{3},{1,2}},
+		{{2},{2,3},{0,1},{1}},
+		{{2},{3},{0,3},{1,2}},
+		{{3},{2,3},{1},{0,1}},
+		{{3},{2},{1,3},{0,2}},
+		{{1,2},{0},{0,3},{2}},
+		{{1,3},{0},{3},{0,2}},
+		{{2,3},{2},{0,1},{0}},
+		{{2,3},{3},{0},{0,1}},
+		{{1,2},{0,3},{0},{1}},
+		{{1,3},{0,2},{1},{0}}
+	}));
 }

@@ -48,14 +48,50 @@ namespace {
 		}
 		return ret;
 	}
+
+	void test_edge(const vector<vector<ll>>& adj, ll s, ll e, ll l) {
+		set<pair<ll, ll>> edges;
+		for (ll i = 0; i < ssize(adj); ++i) {
+			for (ll j : adj[i]) {
+				edges.emplace(i, j);
+			}
+		}
+		auto ret = edge_disjoint(adj, s, e);
+		EXPECT_EQ(ret.size(), l);
+		for (const auto& r : ret) {
+			for (auto p : r | views::pairwise) {
+				EXPECT_TRUE(edges.contains(p));
+				edges.erase(p);
+			}
+		}
+	}
+
+	void test_node(const vector<vector<ll>>& adj, ll s, ll e, ll l) {
+		auto nodes = views::iota(0ll, ll(ssize(adj))) | ranges::to<unordered_set>();
+		nodes.erase(s);
+		nodes.erase(e);
+		auto ret = node_disjoint(adj, s, e);
+		EXPECT_EQ(ret.size(), l);
+		for (const auto& r : ret) {
+			for (ll i = 1; i < ssize(r) - 1; ++i) {
+				EXPECT_TRUE(nodes.contains(r[i]));
+				nodes.erase(r[i]);
+			}
+		}
+		for (const auto& r : ret) {
+			for (auto [a, b] : r | views::pairwise) {
+				EXPECT_TRUE(ranges::find(adj[a], b) != adj[a].end());
+			}
+		}
+	}
 }
 
 TEST(C202DisjointPaths, edgeDisjoint) {
-	EXPECT_EQ(edge_disjoint({{1},{}}, 0, 1).size(), 1);
-	EXPECT_EQ(edge_disjoint({{1,3},{3},{1,4,5},{2,4},{5},{}}, 0, 5).size(), 2);
+	test_edge({{1},{}}, 0, 1, 1);
+	test_edge({{1,3},{3},{1,4,5},{2,4},{5},{}}, 0, 5, 2);
 }
 
 TEST(C202DisjointPaths, nodeDisjoint) {
-	EXPECT_EQ(node_disjoint({{1},{}}, 0, 1).size(), 1);
-	EXPECT_EQ(node_disjoint({{1,3},{3},{1,4,5},{2,4},{5},{}}, 0, 5).size(), 1);
+	test_node({{1},{}}, 0, 1, 1);
+	test_node({{1,3},{3},{1,4,5},{2,4},{5},{}}, 0, 5, 1);
 }

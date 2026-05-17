@@ -30,6 +30,14 @@ namespace {
 		}
 		return true;
 	}
+
+	void test(const vector<pair<ll, ll>>& edges, ll l) {
+		auto ret = maximum_matching(edges);
+		EXPECT_EQ(ret.size(), l);
+		EXPECT_EQ((ret | ranges::to<set>()).size(), l);
+		for (auto r : ret)
+			EXPECT_TRUE(ranges::find(edges, r) != edges.end());
+	}
 }
 
 vector<pair<ll, ll>> maximum_matching(const vector<pair<ll, ll>>& edges) {
@@ -53,8 +61,8 @@ vector<pair<ll, ll>> maximum_matching(const vector<pair<ll, ll>>& edges) {
 }
 
 TEST(C203MaximumMatchings, maximumMatching) {
-	EXPECT_EQ(maximum_matching({{0,1}}).size(), 1);
-	EXPECT_EQ(maximum_matching({{0,4},{1,6},{2,4},{2,5},{2,7},{3,6}}).size(), 3);
+	test({{0,1}}, 1);
+	test({{0,4},{1,6},{2,4},{2,5},{2,7},{3,6}}, 3);
 }
 
 TEST(C203MaximumMatchings, hallsTheorem) {

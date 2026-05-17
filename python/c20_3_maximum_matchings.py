@@ -28,13 +28,20 @@ def halls_theorem(edges):
     return True
 
 class Test(unittest.TestCase):
+    def assertMaximumMatching(self,edges,l):
+        with self.subTest(edges=edges):
+            ret=[*maximum_matching(edges)]
+            self.assertEqual(len(ret),l)
+            self.assertEqual(len(set(ret)),l)
+            for r in ret:
+                self.assertIn(r, edges)
     def test(self):
         edges=[(0,1)]
-        self.assertEqual(len([*maximum_matching(edges)]),1)
+        self.assertMaximumMatching(edges,1)
         self.assertTrue(halls_theorem(edges))
 
         edges=[(0,4),(1,6),(2,4),(2,5),(2,7),(3,6)]
-        self.assertEqual(len([*maximum_matching(edges)]),3)
+        self.assertMaximumMatching(edges,3)
         self.assertFalse(halls_theorem(edges))
 
 if __name__=='__main__':

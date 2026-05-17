@@ -39,7 +39,7 @@ namespace {
 	}
 
 	multiset<multiset<ll>> convert(const vector<vector<ll>>& vec) {
-		return vec | views::transform([](const auto& v) { return v | ranges::to<multiset>(); }) | ranges::to<multiset>();
+		return vec | views::transform(ranges::to<multiset>()) | ranges::to<multiset>();
 	}
 }
 

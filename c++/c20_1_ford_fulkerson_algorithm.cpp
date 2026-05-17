@@ -63,12 +63,11 @@ namespace {
 	}
 
 	vector<pair<ll, ll>> minimum_cuts(const vector<unordered_map<ll, ll>>& adj, ll s) {
-		ll n = ssize(adj);
-		vector<bool> visited(n);
+		unordered_set<ll> visited;
 		auto dfs = [&](this auto self, ll s) {
-			if (visited[s])
+			if (visited.contains(s))
 				return;
-			visited[s] = true;
+			visited.insert(s);
 			for (auto [u, c] : adj[s]) {
 				if (c > 0) {
 					self(u);
@@ -77,12 +76,10 @@ namespace {
 			};
 		dfs(s);
 		vector<pair<ll, ll>> ret;
-		for (ll i = 0; i < n; ++i) {
-			if (visited[i]) {
-				for (auto [j, c] : adj[i]) {
-					if (!visited[j]) {
-						ret.emplace_back(i, j);
-					}
+		for (ll i : visited) {
+			for (auto [j, c] : adj[i]) {
+				if (!visited.contains(j)) {
+					ret.emplace_back(i, j);
 				}
 			}
 		}

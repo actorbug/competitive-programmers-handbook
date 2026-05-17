@@ -53,12 +53,14 @@ def scaling(adj,s,e):
 
 def minimum_cuts(adj,s):
     visited=set()
-    stack=[s]
-    while stack:
-        i=stack.pop()
-        if i not in visited:
-            visited.add(i)
-            stack+=(j for j,c in adj[i].items() if c>0)
+    def dfs(s):
+        if s in visited:
+            return
+        visited.add(s)
+        for u,c in adj[s].items():
+            if c>0:
+                dfs(u)
+    dfs(s)
     for i in visited:
         for j,_ in adj[i].items():
             if j not in visited:

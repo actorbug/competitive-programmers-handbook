@@ -38,13 +38,13 @@ namespace {
 		auto e = existence(adj);
 		if (!e || adj.empty())
 			return {};
-		auto adj2 = adj | views::transform(ranges::to<unordered_set>()) | ranges::to<vector>();
+		auto adj2 = adj | views::transform(ranges::to<unordered_multiset>()) | ranges::to<vector>();
 		vector<ll> ret;
 		auto dfs = [&](this auto self, ll s) -> void {
 			while (!adj2[s].empty()) {
 				ll u = *adj2[s].begin();
-				adj2[s].erase(u);
-				adj2[u].erase(s);
+				adj2[s].erase(adj2[s].find(u));
+				adj2[u].erase(adj2[u].find(s));
 				self(u);
 			}
 			ret.push_back(s);

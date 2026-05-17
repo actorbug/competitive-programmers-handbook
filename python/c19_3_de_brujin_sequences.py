@@ -20,7 +20,7 @@ class Test(unittest.TestCase):
         with self.subTest(n=n,k=k):
             ret=[*debrujin(n,k)]
             self.assertEqual(len(ret),k**n+n-1)
-            self.assertEqual(set(tuple(ret[i:i+n]) for i in range(k**n)),set(product(range(k),repeat=n)))
+            self.assertCountEqual((tuple(ret[i:i+n]) for i in range(k**n)),product(range(k),repeat=n))
     def test(self):
         self.assertDebrujin(0,0)
         self.assertDebrujin(1,3)

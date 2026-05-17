@@ -1,5 +1,5 @@
 import unittest
-from collections import defaultdict
+from collections import defaultdict,Counter
 from util import reversed_adj
 import sys
 from itertools import pairwise
@@ -35,12 +35,18 @@ def hierhorzer(adj):
     e=existence(adj)
     if e is None or not adj:
         return ()
-    adj=[*map(set,adj)]
+    adj=[*map(Counter,adj)]
     def dfs(s):
         while adj[s]:
-            u=next(iter(adj[s]))
-            adj[s].remove(u)
-            adj[u].remove(s)
+            u=next(iter(adj[s].keys()))
+            if adj[s][u]>1:
+                adj[s][u]-=1
+            else:
+                del adj[s][u]
+            if adj[u][s]>1:
+                adj[u][s]-=1
+            else:
+                del adj[u][s]
             yield from dfs(u)
         yield s
     return dfs(max(0,e[1]))

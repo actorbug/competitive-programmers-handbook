@@ -34,7 +34,7 @@ class Test(unittest.TestCase):
                     route[v-1]=i,j
             self.assertEqual(route[0],(y,x))
             for (i1,j1),(i2,j2) in pairwise(route):
-                self.assertEqual(set((abs(i1-i2),abs(j1-j2))),{1,2})
+                self.assertCountEqual((abs(i1-i2),abs(j1-j2)),(1,2))
     def test(self):
         self.assertWarnsdorf(1,1)
         self.assertWarnsdorf(4,3)

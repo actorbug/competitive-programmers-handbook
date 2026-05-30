@@ -4,7 +4,7 @@ using namespace std;
 using ll = long long;
 
 namespace {
-	void bubbleSort(vector<ll>& array) {
+	void bubble_sort(vector<ll>& array) {
 		ll n = ssize(array);
 		for (ll i = n - 1; i > 0; --i) {
 			for (ll j = 0; j < i; ++j) {
@@ -15,16 +15,16 @@ namespace {
 		}
 	}
 
-	void mergeSort(span<ll> array) {
+	void merge_sort(span<ll> array) {
 		if (array.size() <= 1)
 			return;
 		ll k = ssize(array) / 2;
-		mergeSort(array.subspan(0, k));
-		mergeSort(array.subspan(k));
+		merge_sort(array.subspan(0, k));
+		merge_sort(array.subspan(k));
 		ranges::inplace_merge(array, array.begin() + k);
 	}
 
-	void countingSort(vector<ll>& array) {
+	void counting_sort(vector<ll>& array) {
 		ll c = array.empty() ? 0 : ranges::max(array);
 		vector<ll> count(c + 1);
 		for (ll i : array)
@@ -54,13 +54,13 @@ namespace {
 }
 
 TEST(C031SortingTheory, bubbleSort) {
-	test(bubbleSort);
+	test(bubble_sort);
 }
 
 TEST(C031SortingTheory, mergeSort) {
-	test(mergeSort);
+	test(merge_sort);
 }
 
 TEST(C031SortingTheory, countingSort) {
-	test(countingSort);
+	test(counting_sort);
 }

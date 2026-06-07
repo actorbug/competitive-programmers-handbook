@@ -14,7 +14,7 @@ namespace {
 			else {
 				if (l[i1] == l[i2] + d)
 					++i1;
-				ret.push_back(l[i2++]);
+				ret.push_back(l[i2++] + d);
 			}
 		}
 		for (; i1 < n; ++i1)
@@ -48,6 +48,7 @@ namespace {
 TEST(C055MeetInTheMiddle, solve) {
 	EXPECT_TRUE(solve({}, 0));
 	EXPECT_FALSE(solve({}, 1));
+	EXPECT_TRUE(solve({ 3,2,1 }, 1));
 	EXPECT_TRUE(solve({ 2,4,5,9 }, 15));
 	EXPECT_FALSE(solve({ 2,4,5,9 }, 10));
 }

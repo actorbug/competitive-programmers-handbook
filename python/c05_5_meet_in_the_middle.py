@@ -39,6 +39,7 @@ class Test(unittest.TestCase):
     def test(self):
         self.assertTrue(solve([],0))
         self.assertFalse(solve([],1))
+        self.assertTrue(solve([3,2,1],1))
         self.assertTrue(solve([2,4,5,9],15))
         self.assertFalse(solve([2,4,5,9],10))
 

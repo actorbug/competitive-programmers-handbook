@@ -47,10 +47,9 @@ namespace {
 
 	vector<ll> solve4(const vector<ll>& coins, ll n) {
 		if (n < 0) return {};
-		vector<ll> value(n + 1), first(n + 1);
+		vector<ll> value(n + 1, INF), first(n + 1);
 		value[0] = 0;
 		for (ll x = 1; x <= n; ++x) {
-			value[x] = INF;
 			for (auto c : coins) {
 				if (x - c >= 0 && value[x - c] + 1 < value[x]) {
 					value[x] = value[x - c] + 1;

@@ -6,9 +6,8 @@ using ll = long long;
 namespace {
 	ll solve1(const vector<ll>& array) {
 		ll n = ssize(array);
-		vector<ll> length(n);
+		vector<ll> length(n, 1);
 		for (ll k = 0; k < n; ++k) {
-			length[k] = 1;
 			for (ll i = 0; i < k; ++i) {
 				if (array[i] < array[k]) {
 					length[k] = max(length[k], length[i] + 1);

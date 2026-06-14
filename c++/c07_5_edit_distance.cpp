@@ -4,7 +4,24 @@ using namespace std;
 using ll = long long;
 
 namespace {
-	vector<string> solve(string x, string y) {
+	struct Delete {
+		ll pos;
+		char c;
+		bool operator==(const Delete&) const = default;
+	};
+	struct Add {
+		ll pos;
+		char c;
+		bool operator==(const Add&) const = default;
+	};
+	struct Edit {
+		ll pos;
+		char c1, c2;
+		bool operator==(const Edit&) const = default;
+	};
+	using Command = variant<Delete, Add, Edit>;
+
+	vector<Command> solve(string x, string y) {
 		vector<vector<ll>> distance(x.size() + 1, vector<ll>(y.size() + 1));
 		for (ll a = 0; a <= ssize(x); ++a)
 			distance[a][0] = a;
@@ -15,20 +32,20 @@ namespace {
 				distance[a][b] = min({ distance[a][b - 1] + 1, distance[a - 1][b] + 1, distance[a - 1][b - 1] + (x[a - 1] != y[b - 1]) });
 			}
 		}
-		vector<string> ret;
+		vector<Command> ret;
 		ll a = ssize(x), b = ssize(y);
 		while (a > 0 && b > 0) {
 			if (a > 0 && distance[a - 1][b] + 1 == distance[a][b]) {
-				ret.push_back(format("delete {} {}", b, x[a - 1]));
+				ret.push_back(Delete{ b, x[a - 1] });
 				--a;
 			}
 			else if (b > 0 && distance[a][b - 1] + 1 == distance[a][b]) {
-				ret.push_back(format("add {} {}", b - 1, y[b - 1]));
+				ret.push_back(Add{ b - 1, y[b - 1] });
 				--b;
 			}
 			else {
 				if (distance[a - 1][b - 1] + 1 == distance[a][b])
-					ret.push_back(format("edit {} {} {}", b - 1, x[a - 1], y[b - 1]));
+					ret.push_back(Edit{ b - 1, x[a - 1], y[b - 1] });
 				--a;
 				--b;
 			}
@@ -39,9 +56,9 @@ namespace {
 }
 
 TEST(C075EditDistance, solve) {
-	EXPECT_EQ(solve("", ""), vector<string>{});
-	EXPECT_EQ(solve("ABC", "ABCA"), vector<string>{"add 3 A"});
-	EXPECT_EQ(solve("ABC", "AC"), vector<string>{"delete 1 B"});
-	EXPECT_EQ(solve("ABC", "ADC"), vector<string>{"edit 1 B D"});
-	EXPECT_EQ(solve("LOVE", "MOVIE"), (vector<string>{"edit 0 L M", "add 3 I"}));
+	EXPECT_EQ(solve("", ""), vector<Command>{});
+	EXPECT_EQ(solve("ABC", "ABCA"), (vector<Command>{Add{ 3, 'A' }}));
+	EXPECT_EQ(solve("ABC", "AC"), (vector<Command>{Delete{ 1, 'B' }}));
+	EXPECT_EQ(solve("ABC", "ADC"), (vector<Command>{Edit{ 1, 'B', 'D' }}));
+	EXPECT_EQ(solve("LOVE", "MOVIE"), (vector<Command>{Edit{ 0, 'L', 'M' }, Add{ 3, 'I' }}));
 }

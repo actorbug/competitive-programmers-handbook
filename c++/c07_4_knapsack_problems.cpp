@@ -21,9 +21,9 @@ namespace {
 		ll n = ssize(w), W = ranges::fold_left(w, 0, plus());
 		vector<bool> possible(W + 1);
 		possible[0] = true;
-		for (ll k = 1; k <= n; ++k) {
-			for (ll x = W; x >= 0; x--) {
-				if (possible[x]) possible[x + w[k - 1]] = true;
+		for (ll k : w) {
+			for (ll x = W - k; x >= 0; x--) {
+				if (possible[x]) possible[x + k] = true;
 			}
 		}
 		return possible;

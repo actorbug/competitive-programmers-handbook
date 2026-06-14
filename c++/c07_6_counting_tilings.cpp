@@ -106,8 +106,9 @@ namespace {
 	ll solve3(ll n, ll m) {
 		double ret = 1;
 		for (ll a = 1; a <= ((n + 1) / 2); ++a) {
+			double ca = cos(numbers::pi * a / (n + 1));
 			for (ll b = 1; b <= ((m + 1) / 2); ++b) {
-				double ca = cos(numbers::pi * a / (n + 1)), cb = cos(numbers::pi * b / (m + 1));
+				double cb = cos(numbers::pi * b / (m + 1));
 				ret *= 4 * (ca * ca + cb * cb);
 			}
 		}

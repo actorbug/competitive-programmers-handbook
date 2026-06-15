@@ -5,10 +5,10 @@ class BIT:
         if isinstance(arg,int):
             self.tree=[0]*(arg+1)
         else:
-            n=len(arg)
+            n=len(arg)+1
             self.tree=[0]+arg
-            for i in range(1,n+1):
-                if (j:=i+(i&-i))<=n:
+            for i in range(1,n):
+                if (j:=i+(i&-i))<n:
                     self.tree[j]+=self.tree[i]
     def sum(self,k):
         s=0

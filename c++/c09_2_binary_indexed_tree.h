@@ -4,9 +4,9 @@ struct BIT {
 	BIT(size_t n) : tree(n + 1) {}
 	BIT(const vector<ll>& ary) : tree(ary.size() + 1) {
 		ranges::copy(ary, tree.begin() + 1);
-		ll j, n = ssize(ary);
-		for (ll i = 0; i <= n; ++i) {
-			if ((j = i + (i & -i)) <= n) {
+		ll j, n = ssize(tree);
+		for (ll i = 0; i < n; ++i) {
+			if ((j = i + (i & -i)) < n) {
 				tree[j] += tree[i];
 			}
 		}

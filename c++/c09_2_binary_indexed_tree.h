@@ -5,7 +5,7 @@ struct BIT {
 	BIT(const vector<ll>& ary) : tree(ary.size() + 1) {
 		ranges::copy(ary, tree.begin() + 1);
 		ll j, n = ssize(tree);
-		for (ll i = 0; i < n; ++i) {
+		for (ll i = 1; i < n; ++i) {
 			if ((j = i + (i & -i)) < n) {
 				tree[j] += tree[i];
 			}

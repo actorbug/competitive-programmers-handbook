@@ -24,8 +24,10 @@ struct RangeUpdates {
 private:
 	static vector<ll> init(const vector<ll>& ary) {
 		vector<ll> ret(ary.size() + 1);
-		for (ll i = 0; i < ssize(ret); ++i)
-			ret[i] = ((i < ssize(ret) - 1) ? ary[i] : 0) - ((i > 0) ? ary[i - 1] : 0);
+		for (ll i = 0; i < ssize(ary); ++i) {
+			ret[i] += ary[i];
+			ret[i + 1] -= ary[i];
+		}
 		return ret;
 	}
 	BIT bit;

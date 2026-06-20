@@ -6,7 +6,7 @@ constexpr ll INF = numeric_limits<ll>::max() / 2;
 
 namespace {
 	struct SegTree {
-		SegTree(size_t n) : tree(1ll << (bit_width(n ? n - 1 : 0) + 1)) {}
+		SegTree(size_t n) : tree(1ll << (bit_width(max(n, 1uz) - 1) + 1)) {}
 		SegTree(const vector<ll>& ary) : SegTree(ary.size()) {
 			ll n = ssize(tree) / 2;
 			ranges::copy(ary, tree.begin() + n);
@@ -36,7 +36,7 @@ namespace {
 	};
 
 	struct SegTreeMin {
-		SegTreeMin(const vector<ll>& array) : tree(1ll << (bit_width(array.empty() ? 0 : array.size() - 1) + 1), INF) {
+		SegTreeMin(const vector<ll>& array) : tree(1ll << (bit_width(max(array.size(), 1uz) - 1) + 1), INF) {
 			ll n = ssize(tree) / 2;
 			ranges::copy(array, tree.begin() + n);
 			for (ll i = n - 1; i > 0; --i)

@@ -5,7 +5,7 @@ using ll = long long;
 
 namespace {
 	struct SegTree {
-		SegTree(size_t n) : tree(1ll << (bit_width(n ? n - 1 : 0) + 1)) {}
+		SegTree(size_t n) : tree(1ll << (bit_width(max(n, 1uz) - 1) + 1)) {}
 		SegTree(const vector<ll>& ary) : SegTree(ary.size()) {
 			ll n = ssize(tree) / 2;
 			ranges::copy(ary, tree.begin() + n);
@@ -34,7 +34,7 @@ namespace {
 	};
 
 	struct SegTree2D {
-		SegTree2D(const vector<vector<ll>>& ary) : tree(1ll << (bit_width(ary.empty() ? 0 : ary.size() - 1) + 1), SegTree(ary.empty() ? 0 : ary[0].size())) {
+		SegTree2D(const vector<vector<ll>>& ary) : tree(1ll << (bit_width(max(ary.size(), 1uz) - 1) + 1), SegTree(ary.empty() ? 0 : ary[0].size())) {
 			ll n = ssize(tree) / 2;
 			ranges::copy(ary, tree.begin() + n);
 			for (ll i = n - 1; i > 0; --i)

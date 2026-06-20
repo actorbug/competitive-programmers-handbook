@@ -5,7 +5,7 @@ using ll = long long;
 
 namespace {
 	struct LazySegTree {
-		LazySegTree(const vector<ll>& ary) : n(1ll << bit_width(ary.empty() ? 0 : ary.size() - 1)), s(n * 2), z(n * 2) {
+		LazySegTree(const vector<ll>& ary) : n(1ll << bit_width(max(ary.size(), 1uz) - 1)), s(n * 2), z(n * 2) {
 			ranges::copy(ary, s.begin() + n);
 			for (ll i = n - 1; i > 0; --i)
 				s[i] = s[2 * i] + s[2 * i + 1];
@@ -79,7 +79,7 @@ namespace {
 	}
 
 	struct PolyLazySegTree {
-		PolyLazySegTree(const vector<ll>& ary) : n(1ll << bit_width(ary.empty() ? 0 : ary.size() - 1)), s(n * 2), z(n * 2) {
+		PolyLazySegTree(const vector<ll>& ary) : n(1ll << bit_width(max(ary.size(), 1uz) - 1)), s(n * 2), z(n * 2) {
 			ranges::copy(ary, s.begin() + n);
 			for (ll i = n - 1; i > 0; --i)
 				s[i] = s[2 * i] + s[2 * i + 1];

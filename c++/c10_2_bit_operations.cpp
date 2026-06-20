@@ -47,14 +47,17 @@ TEST(C102BitOperations, invertbit) {
 }
 
 TEST(C102BitOperations, resetlastbit) {
+	EXPECT_EQ(resetlastbit(0b0), 0b0);
 	EXPECT_EQ(resetlastbit(0b1100), 0b1000);
 }
 
 TEST(C102BitOperations, getlastbit) {
+	EXPECT_EQ(getlastbit(0b0), 0b0);
 	EXPECT_EQ(getlastbit(0b1100), 0b100);
 }
 
 TEST(C102BitOperations, invertafterlastbit) {
+	EXPECT_EQ(invertafterlastbit(0b0), ~0b0);
 	EXPECT_EQ(invertafterlastbit(0b1100), 0b1111);
 }
 

@@ -4,13 +4,13 @@ def checkbit(x,k):
     return x&(1<<k)
 def setbit(x,k,b):
     return x|(1<<k) if b else x&~(1<<k)
-def reversrbit(x,k):
+def invertbit(x,k):
     return x^(1<<k)
 def resetlastbit(x):
     return x&(x-1)
 def getlastbit(x):
     return x&-x
-def reverseafterlastbit(x):
+def invertafterlastbit(x):
     return x|(x-1)
 def is2n(x):
     return resetlastbit(x)==0
@@ -30,11 +30,11 @@ class Test(unittest.TestCase):
         self.assertFalse(checkbit(0b1000,2))
         self.assertEqual(setbit(0b1000,2,1),0b1100)
         self.assertEqual(setbit(0b1100,2,0),0b1000)
-        self.assertEqual(reversrbit(0b1100,2),0b1000)
-        self.assertEqual(reversrbit(0b1000,2),0b1100)
+        self.assertEqual(invertbit(0b1100,2),0b1000)
+        self.assertEqual(invertbit(0b1000,2),0b1100)
         self.assertEqual(resetlastbit(0b1100),0b1000)
         self.assertEqual(getlastbit(0b1100),0b100)
-        self.assertEqual(reverseafterlastbit(0b1100),0b1111)
+        self.assertEqual(invertafterlastbit(0b1100),0b1111)
         self.assertTrue(is2n(0b1000))
         self.assertFalse(is2n(0b1100))
 

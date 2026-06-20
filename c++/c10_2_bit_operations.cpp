@@ -11,7 +11,7 @@ namespace {
 	ll setbit(ll x, ll k, bool b) {
 		return b ? x | (1ll << k) : x & ~(1ll << k);
 	}
-	ll reversebit(ll x, ll k) {
+	ll invertbit(ll x, ll k) {
 		return x ^ (1ll << k);
 	}
 	ll resetlastbit(ll x) {
@@ -20,7 +20,7 @@ namespace {
 	ll getlastbit(ll x) {
 		return x & -x;
 	}
-	ll reverseafterlastbit(ll x) {
+	ll invertafterlastbit(ll x) {
 		return x | (x - 1);
 	}
 	bool is2n(ll x) {
@@ -41,9 +41,9 @@ TEST(C102BitOperations, setbit) {
 	EXPECT_EQ(setbit(0b1100, 2, false), 0b1000);
 }
 
-TEST(C102BitOperations, reversebit) {
-	EXPECT_EQ(reversebit(0b1100, 2), 0b1000);
-	EXPECT_EQ(reversebit(0b1000, 2), 0b1100);
+TEST(C102BitOperations, invertbit) {
+	EXPECT_EQ(invertbit(0b1100, 2), 0b1000);
+	EXPECT_EQ(invertbit(0b1000, 2), 0b1100);
 }
 
 TEST(C102BitOperations, resetlastbit) {
@@ -54,8 +54,8 @@ TEST(C102BitOperations, getlastbit) {
 	EXPECT_EQ(getlastbit(0b1100), 0b100);
 }
 
-TEST(C102BitOperations, reverseafterlastbit) {
-	EXPECT_EQ(reverseafterlastbit(0b1100), 0b1111);
+TEST(C102BitOperations, invertafterlastbit) {
+	EXPECT_EQ(invertafterlastbit(0b1100), 0b1111);
 }
 
 TEST(C102BitOperations, is2n) {

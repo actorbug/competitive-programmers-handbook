@@ -7,10 +7,10 @@ def bellman_ford(adj,x):
     n=len(adj)
     distance=[INF]*n
     distance[x]=0
-    for _ in range(n):
+    for _ in range(n-1):
         changed=False
-        for a,e in enumerate(adj):
-            for b,w in e:
+        for a in range(1,n):
+            for b,w in adj[a]:
                 if distance[b]>distance[a]+w:
                     distance[b]=distance[a]+w
                     changed=True
@@ -44,7 +44,7 @@ def spfa(adj,x):
         for u,w in adj[s]:
             if distance[u]>distance[s]+w:
                 len_[u]=len_[s]+1
-                if len_[u]>=n:
+                if len_[u]>=n-1:
                     return None
                 distance[u]=distance[s]+w
                 q.append(u)
@@ -54,9 +54,9 @@ class Test(unittest.TestCase):
     def test(self):
         for d in (bellman_ford,spfa):
             with self.subTest(d=d):
-                self.assertEqual(d([[]],0),[0])
-                self.assertEqual(d([[(1,5),(2,3),(3,7)],[(0,5),(3,3),(4,2)],[(0,3),(3,1)],[(0,7),(1,3),(2,1),(4,2)],[(1,2),(3,2)]],0),[0,5,3,4,6])
-                self.assertIsNone(d([[(1,3),(2,5)],[(0,3),(2,2),(3,1)],[(0,5),(1,2),(3,-7)],[(1,1),(2,-7)]],0))
+                self.assertEqual(d([[],[]],1),[INF,0])
+                self.assertEqual(d([[],[(2,5),(3,3),(4,7)],[(1,5),(4,3),(5,2)],[(1,3),(4,1)],[(1,7),(2,3),(3,1),(5,2)],[(2,2),(4,2)]],1),[INF,0,5,3,4,6])
+                self.assertIsNone(d([[],[(2,3),(3,5)],[(1,3),(3,2),(4,1)],[(1,5),(2,2),(4,-7)],[(2,1),(3,-7)]],1))
 
 if __name__=='__main__':
     unittest.main()

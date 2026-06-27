@@ -36,11 +36,11 @@ class Test(unittest.TestCase):
             for r in ret:
                 self.assertIn(r, edges)
     def test(self):
-        edges=[(0,1)]
+        edges=[(1,2)]
         self.assertMaximumMatching(edges,1)
         self.assertTrue(halls_theorem(edges))
 
-        edges=[(0,4),(1,6),(2,4),(2,5),(2,7),(3,6)]
+        edges=[(1,5),(2,7),(3,5),(3,6),(3,8),(4,7)]
         self.assertMaximumMatching(edges,3)
         self.assertFalse(halls_theorem(edges))
 

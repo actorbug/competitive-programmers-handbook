@@ -9,7 +9,7 @@ namespace {
 		unordered_map<ll, ll> pos;
 		for (auto [i, a] : topological(adj) | views::enumerate)
 			pos[a] = i;
-		for (ll a = 0; a < ssize(adj); ++a) {
+		for (ll a = 1; a < ssize(adj); ++a) {
 			for (ll b : adj[a]) {
 				EXPECT_LT(pos[a], pos[b]);
 			}
@@ -30,7 +30,7 @@ vector<ll> topological(const vector<vector<ll>>& adj) {
 		visited[s] = 2;
 		return true;
 		};
-	for (ll x = 0; x < n; ++x) {
+	for (ll x = 1; x < n; ++x) {
 		if (!visited[x] && !dfs(x)) {
 			return {};
 		}
@@ -40,7 +40,7 @@ vector<ll> topological(const vector<vector<ll>>& adj) {
 }
 
 TEST(C161TopologicalSorting, topological) {
-	test({});
-	test({ {1},{2},{5},{0,4},{1,2},{} });
-	EXPECT_EQ(topological({ {1},{2},{4,5},{0,4},{1},{} }), vector<ll>{});
+	test({ {} });
+	test({ {},{2},{3},{6},{1,5},{2,3},{} });
+	EXPECT_EQ(topological({ {},{2},{3},{5,6},{1,5},{2},{} }), vector<ll>{});
 }

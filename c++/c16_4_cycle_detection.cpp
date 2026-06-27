@@ -24,6 +24,6 @@ namespace {
 }
 
 TEST(C164CycleDetection, floyd) {
-	EXPECT_EQ(floyd({ 0 }, 0), (pair<ll, ll>{0, 1}));
-	EXPECT_EQ(floyd({ 1,2,3,4,5,3 }, 0), (pair<ll, ll>{3, 3}));
+	EXPECT_EQ(floyd({ 0,1 }, 1), (pair<ll, ll>{1, 1}));
+	EXPECT_EQ(floyd({ 0,2,3,4,5,6,4 }, 1), (pair<ll, ll>{4, 3}));
 }

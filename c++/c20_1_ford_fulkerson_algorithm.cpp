@@ -14,7 +14,7 @@ namespace {
 
 	vector<unordered_map<ll, ll>> ford_fulkerson(const vector<vector<pair<ll, ll>>>& adj, ll s, ll e, auto find) {
 		vector<unordered_map<ll, ll>> adj2(adj.size());
-		for (ll i = 0; i < ssize(adj); ++i) {
+		for (ll i = 1; i < ssize(adj); ++i) {
 			for (auto [j, c] : adj[i]) {
 				adj2[i][j] = c;
 				adj2[j][i] = 0;
@@ -35,8 +35,8 @@ namespace {
 
 	vector<unordered_map<ll, ll>> scaling(const vector<vector<pair<ll, ll>>>& adj, ll s, ll e) {
 		ll m = 0;
-		for (const auto& a : adj) {
-			for (auto [_, c] : a) {
+		for (ll i = 1; i < ssize(adj); ++i) {
+			for (auto [_, c] : adj[i]) {
 				m = max(m, c);
 			}
 		}
@@ -123,16 +123,16 @@ ll adj2tc(const vector<unordered_map<ll, ll>>& adj, ll e) {
 }
 
 TEST(C201FordFulkersonAlgorithm, edmondsKarp) {
-	EXPECT_EQ(adj2tc(edmonds_karp({{{1,2}},{}}, 0, 1), 1), 2);
-	EXPECT_EQ(adj2tc(edmonds_karp({{{1,5},{3,4}},{{2,6}},{{4,8},{5,5}},{{1,3},{4,1}},{{5,2}},{}}, 0, 5), 5), 7);
+	EXPECT_EQ(adj2tc(edmonds_karp({{},{{2,2}},{}}, 1, 2), 2), 2);
+	EXPECT_EQ(adj2tc(edmonds_karp({{},{{2,5},{4,4}},{{3,6}},{{5,8},{6,5}},{{2,3},{5,1}},{{6,2}},{}}, 1, 6), 6), 7);
 }
 
 TEST(C201FordFulkersonAlgorithm, scaling) {
-	EXPECT_EQ(adj2tc(scaling({{{1,2}},{}}, 0, 1), 1), 2);
-	EXPECT_EQ(adj2tc(scaling({{{1,5},{3,4}},{{2,6}},{{4,8},{5,5}},{{1,3},{4,1}},{{5,2}},{}}, 0, 5), 5), 7);
+	EXPECT_EQ(adj2tc(scaling({{},{{2,2}},{}}, 1, 2), 2), 2);
+	EXPECT_EQ(adj2tc(scaling({{},{{2,5},{4,4}},{{3,6}},{{5,8},{6,5}},{{2,3},{5,1}},{{6,2}},{}}, 1, 6), 6), 7);
 }
 
 TEST(C201FordFulkersonAlgorithm, minimunCuts) {
-	test({{{1,2}},{}}, 0, 1, 2);
-	test({{{1,5},{3,4}},{{2,6}},{{4,8},{5,5}},{{1,3},{4,1}},{{5,2}},{}}, 0, 5, 7);
+	test({{},{{2,2}},{}}, 1, 2, 2);
+	test({{},{{2,5},{4,4}},{{3,6}},{{5,8},{6,5}},{{2,3},{5,1}},{{6,2}},{}}, 1, 6, 7);
 }

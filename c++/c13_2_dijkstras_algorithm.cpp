@@ -25,6 +25,6 @@ namespace {
 }
 
 TEST(C132DijkstrasAlgorithm, dijkstra) {
-	EXPECT_EQ(dijkstra({ {} }, 0), vector<ll>{0});
-	EXPECT_EQ(dijkstra({ {{1,5},{3,9},{4,1}},{{0,5},{2,2}},{{1,2},{3,6}},{{0,9},{2,6},{4,2}},{{0,1},{3,2}} }, 0), (vector<ll>{0, 5, 7, 3, 1}));
+	EXPECT_EQ(dijkstra({ {},{} }, 1), (vector<ll>{ INF,0 }));
+	EXPECT_EQ(dijkstra({ {},{{2,5},{4,9},{5,1}},{{1,5},{3,2}},{{2,2},{4,6}},{{1,9},{3,6},{5,2}},{{1,1},{4,2}} }, 1), (vector<ll>{ INF,0,5,7,3,1 }));
 }

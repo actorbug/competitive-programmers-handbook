@@ -21,9 +21,9 @@ namespace {
 
 TEST(C121DepthFirstSearch, dfs) {
 	vector<ll> ret;
-	search({ {} }, 0, [&](ll s) { ret.push_back(s); });
-	EXPECT_EQ(ret, vector<ll>{0});
+	search({ {},{} }, 1, [&](ll s) { ret.push_back(s); });
+	EXPECT_EQ(ret, vector<ll>{1});
 	ret.clear();
-	search({ {1,3},{0,2,4},{1,4},{0},{1,2} }, 0, [&](ll s) { ret.push_back(s); });
-	EXPECT_EQ(ret, (vector<ll>{0, 1, 2, 4, 3}));
+	search({ {},{2,4},{1,3,5},{2,5},{1},{2,3} }, 1, [&](ll s) { ret.push_back(s); });
+	EXPECT_EQ(ret, (vector<ll>{1, 2, 3, 5, 4}));
 }

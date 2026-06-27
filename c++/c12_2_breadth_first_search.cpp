@@ -24,9 +24,9 @@ namespace {
 
 TEST(C122BreadthFirstSearch, bfs) {
 	vector<pair<ll, ll>> ret;
-	bfs({ {} }, 0, [&](ll s, ll d) { ret.emplace_back(s, d); });
-	EXPECT_EQ(ret, (vector<pair<ll, ll>>{{0, 0}}));
+	bfs({ {},{} }, 1, [&](ll s, ll d) { ret.emplace_back(s, d); });
+	EXPECT_EQ(ret, (vector<pair<ll, ll>>{{1,0}}));
 	ret.clear();
-	bfs({ {1,3},{0,2,4},{1,5},{0},{1,5},{2,4} }, 0, [&](ll s, ll d) { ret.emplace_back(s, d); });
-	EXPECT_EQ(ret, (vector<pair<ll, ll>>{{0, 0}, {1, 1}, {3, 1}, {2, 2}, {4, 2}, {5, 3}}));
+	bfs({ {},{2,4},{1,3,5},{2,6},{1},{2,6},{3,5} }, 1, [&](ll s, ll d) { ret.emplace_back(s, d); });
+	EXPECT_EQ(ret, (vector<pair<ll, ll>>{ {1,0},{2,1},{4,1},{3,2},{5,2},{6,3} }));
 }

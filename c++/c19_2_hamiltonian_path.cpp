@@ -8,9 +8,9 @@ namespace {
 	bool ore(const vector<vector<ll>>& adj) {
 		ll n = ssize(adj);
 		auto adj2 = adj | views::transform(ranges::to<unordered_set>()) | ranges::to<vector>();
-		for (ll i = 0; i < n - 1; ++i) {
+		for (ll i = 1; i < n - 1; ++i) {
 			for (ll j = i + 1; j < n; ++j) {
-				if (!adj2[i].contains(j) && ssize(adj[i]) + ssize(adj[j]) < n) {
+				if (!adj2[i].contains(j) && ssize(adj[i]) + ssize(adj[j]) < n - 1) {
 					return false;
 				}
 			}
@@ -19,11 +19,11 @@ namespace {
 	}
 
 	vector<ll> construction(const vector<vector<ll>>& adj) {
-		ll n = ssize(adj);
-		vector<ll> adj2(adj.size());
-		for (ll i = 0; i < n; ++i) {
+		ll n = ssize(adj) - 1;
+		vector<ll> adj2(adj.size() - 1);
+		for (ll i = 1; i <= n; ++i) {
 			for (ll j : adj[i]) {
-				adj2[i] |= 1ll << j;
+				adj2[i - 1] |= 1ll << (j - 1);
 			}
 		}
 		vector<ll> dp(1ll << n);
@@ -42,7 +42,7 @@ namespace {
 		vector<ll> ret;
 		while (s) {
 			ll c = prev & dp[s], i = c & -c, j = bit_width(ull(i)) - 1;
-			ret.push_back(j);
+			ret.push_back(j + 1);
 			prev = adj2[j];
 			s ^= i;
 		}
@@ -55,16 +55,16 @@ namespace {
 			EXPECT_TRUE(ranges::find(adj[i], j) != adj[i].end());
 		ranges::sort(ret);
 		for (ll i = 0; i < ssize(ret); ++i)
-			EXPECT_EQ(ret[i], i);
+			EXPECT_EQ(ret[i], i + 1);
 	}
 }
 
 TEST(C192HamiltonianPath, ore) {
-	EXPECT_TRUE(ore({}));
-	EXPECT_FALSE(ore({ {1,3},{0,2,4},{1,4},{0,4},{1,2,3} }));
+	EXPECT_TRUE(ore({ {} }));
+	EXPECT_FALSE(ore({ {},{2,4},{1,3,5},{2,5},{1,5},{2,3,4} }));
 }
 
 TEST(C192HamiltonianPath, construction) {
-	test({});
-	test({ {1,3},{0,2,4},{1,4},{0,4},{1,2,3} });
+	test({ {} });
+	test({ {},{2,4},{1,3,5},{2,5},{1,5},{2,3,4} });
 }

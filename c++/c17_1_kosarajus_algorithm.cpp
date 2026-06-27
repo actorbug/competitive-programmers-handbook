@@ -23,7 +23,7 @@ vector<vector<ll>> kosaraju(const vector<vector<ll>>& adj) {
 		f(x);
 		};
 	vector<ll> nodes;
-	for (ll x = 0; x < n; ++x) {
+	for (ll x = 1; x < n; ++x) {
 		if (!visited[x]) {
 			dfs(adj, x, [&](ll u) { nodes.push_back(u); });
 		}
@@ -41,6 +41,6 @@ vector<vector<ll>> kosaraju(const vector<vector<ll>>& adj) {
 }
 
 TEST(C171KosarajusAlgorithm, kosaraju) {
-	EXPECT_EQ(convert(kosaraju({})), multiset<multiset<ll>>{});
-	EXPECT_EQ(convert(kosaraju({ {1,3},{0,4},{1,6},{},{3},{2,4},{5} })), (multiset<multiset<ll>>{ {0,1},{2,5,6},{3},{4} }));
+	EXPECT_EQ(convert(kosaraju({ {} })), multiset<multiset<ll>>{});
+	EXPECT_EQ(convert(kosaraju({ {},{2,4},{1,5},{2,7},{},{4},{3,5},{6} })), (multiset<multiset<ll>>{ {1,2},{3,6,7},{4},{5} }));
 }

@@ -9,9 +9,9 @@ namespace {
 		ll n = ssize(adj);
 		vector<ll> distance(n, INF);
 		distance[x] = 0;
-		for (ll i = 1; i <= n; ++i) {
+		for (ll i = 1; i < n; ++i) {
 			bool changed = false;
-			for (ll a = 0; a < n; ++a) {
+			for (ll a = 1; a < n; ++a) {
 				for (auto [b, w] : adj[a]) {
 					if (distance[b] > distance[a] + w) {
 						distance[b] = distance[a] + w;
@@ -36,7 +36,7 @@ namespace {
 			for (auto [b, w] : adj[a]) {
 				if (distance[b] > distance[a] + w) {
 					len[b] = len[a] + 1;
-					if (len[b] >= n)
+					if (len[b] >= n - 1)
 						return {};
 					distance[b] = distance[a] + w;
 					if (!inq[b]) {
@@ -51,13 +51,13 @@ namespace {
 }
 
 TEST(C131BellmanFord, bellmanFord) {
-	EXPECT_EQ(bellman_ford({ {} }, 0), vector<ll>{0});
-	EXPECT_EQ(bellman_ford({ {{1,5},{2,3},{3,7}},{{0,5},{3,3},{4,2}},{{0,3},{3,1}},{{0,7},{1,3},{2,1},{4,2}},{{1,2},{3,2}} }, 0), (vector<ll>{0, 5, 3, 4, 6}));
-	EXPECT_EQ(bellman_ford({ {{1,3},{2,5}},{{0,3},{2,2},{3,1}},{{0,5},{1,2},{3,-7}},{{1,1},{2,-7}} }, 0), vector<ll>{});
+	EXPECT_EQ(bellman_ford({ {},{} }, 1), (vector<ll>{INF,0}));
+	EXPECT_EQ(bellman_ford({ {},{{2,5},{3,3},{4,7}},{{1,5},{4,3},{5,2}},{{1,3},{4,1}},{{1,7},{2,3},{3,1},{5,2}},{{2,2},{4,2}} }, 1), (vector<ll>{ INF,0,5,3,4,6 }));
+	EXPECT_EQ(bellman_ford({ {},{{2,3},{3,5}},{{1,3},{3,2},{4,1}},{{1,5},{2,2},{4,-7}},{{2,1},{3,-7}} }, 1), vector<ll>{});
 }
 
 TEST(C131BellmanFord, spfa) {
-	EXPECT_EQ(spfa({ {} }, 0), vector<ll>{0});
-	EXPECT_EQ(spfa({ {{1,5},{2,3},{3,7}},{{0,5},{3,3},{4,2}},{{0,3},{3,1}},{{0,7},{1,3},{2,1},{4,2}},{{1,2},{3,2}} }, 0), (vector<ll>{0, 5, 3, 4, 6}));
-	EXPECT_EQ(spfa({ {{1,3},{2,5}},{{0,3},{2,2},{3,1}},{{0,5},{1,2},{3,-7}},{{1,1},{2,-7}} }, 0), vector<ll>{});
+	EXPECT_EQ(spfa({ {},{} }, 1), (vector<ll>{INF, 0}));
+	EXPECT_EQ(spfa({ {},{{2,5},{3,3},{4,7}},{{1,5},{4,3},{5,2}},{{1,3},{4,1}},{{1,7},{2,3},{3,1},{5,2}},{{2,2},{4,2}} }, 1), (vector<ll>{ INF, 0, 5, 3, 4, 6 }));
+	EXPECT_EQ(spfa({ {},{{2,3},{3,5}},{{1,3},{3,2},{4,1}},{{1,5},{2,2},{4,-7}},{{2,1},{3,-7}} }, 1), vector<ll>{});
 }

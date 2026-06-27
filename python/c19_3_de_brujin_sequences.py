@@ -6,14 +6,14 @@ def debrujin(n,k):
     if n<=1:
         yield from range(n*k)
         return
-    adj=[]
+    adj=[[]]
     d=k**(n-2)
     for i in range(k**(n-1)):
         e=i%d*k
-        adj.append([e+j for j in range(k)])
+        adj.append([e+j+1 for j in range(k)])
     yield from [0]*(n-2)
     for i in hierhorzer2(adj):
-        yield i%k
+        yield (i-1)%k
 
 class Test(unittest.TestCase):
     def assertDebrujin(self,n,k):

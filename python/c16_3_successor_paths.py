@@ -16,10 +16,10 @@ class Succ:
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual(Succ([0],3)(0,10),0)
-        succ=Succ([2,4,6,5,1,1,0,5,2],3)
-        self.assertEqual(succ(3,6),1)
-        self.assertEqual(succ(3,11),4)
+        self.assertEqual(Succ([0,1],3)(1,10),1)
+        succ=Succ([0,3,5,7,6,2,2,1,6,3],3)
+        self.assertEqual(succ(4,6),2)
+        self.assertEqual(succ(4,11),5)
 
 if __name__=='__main__':
     unittest.main()

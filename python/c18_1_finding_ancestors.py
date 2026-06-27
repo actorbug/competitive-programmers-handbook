@@ -6,15 +6,15 @@ sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 class Ancestor:
     def __init__(self,adj,x):
         n=len(adj)
-        f=[-1]*(n+1)
+        f=[0]*n
         def dfs(s,e):
             f[s]=e
             for u in adj[s]:
                 if u!=e:
                     dfs(u,s)
-        dfs(x,-1)
+        dfs(x,0)
         self.a=[f]
-        for _ in range((n-1).bit_length()-1):
+        for _ in range((n-2).bit_length()-1):
             f=[f[i] for i in f]
             self.a.append(f)
     def __call__(self,x,k):
@@ -22,15 +22,15 @@ class Ancestor:
             if k&1:
                 x=f[x]
             k>>=1
-        return x if k<=0 else -1
+        return x if k<=0 else 0
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual(Ancestor([[]],0)(0,0),0)
-        ancestor=Ancestor([[3,4,1],[0,5],[3],[0,2,6],[0],[1],[3,7],[6]],0)
-        self.assertEqual(ancestor(1,1),0)
-        self.assertEqual(ancestor(7,2),3)
-        self.assertEqual(ancestor(7,17),-1)
+        self.assertEqual(Ancestor([[],[]],1)(1,0),1)
+        ancestor=Ancestor([[],[4,5,2],[1,6],[4],[1,3,7],[1],[2],[4,8],[7]],1)
+        self.assertEqual(ancestor(2,1),1)
+        self.assertEqual(ancestor(8,2),4)
+        self.assertEqual(ancestor(8,17),0)
 
 if __name__=='__main__':
     unittest.main()

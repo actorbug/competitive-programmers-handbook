@@ -20,7 +20,7 @@ def merging(adj,val,x,q):
                 d[s].update(d[u])
         for i in r[s]:
             a[i]=d[s][q[i][1]]
-    dfs(x,-1)
+    dfs(x,0)
     return a
 
 def lca(adj,x,q):
@@ -44,16 +44,16 @@ def lca(adj,x,q):
                 v=value[uf.find(s)]
                 uf.unite(u,s)
                 value[uf.find(u)]=v
-    dfs(x,-1)
+    dfs(x,0)
     return a
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual(merging([[]],[3],0,[]),[])
-        self.assertEqual(merging([[1,2,3,4],[0,5],[0],[0,6,7,8],[0],[1],[3],[3],[3]],[2,3,5,3,1,4,4,3,1],0,[(3,3)]),[2])
+        self.assertEqual(merging([[],[]],[0,3],1,[]),[])
+        self.assertEqual(merging([[],[2,3,4,5],[1,6],[1],[1,7,8,9],[1],[2],[4],[4],[4]],[0,2,3,5,3,1,4,4,3,1],1,[(4,3)]),[2])
 
-        self.assertEqual(lca([[]],0,[]),[])
-        self.assertEqual(lca([[1,2,3],[0,4,5],[0],[0,6],[1],[1,7],[3],[5]],0,[(4,7),(1,6)]),[1,0])
+        self.assertEqual(lca([[],[]],1,[]),[])
+        self.assertEqual(lca([[],[2,3,4],[1,5,6],[1],[1,7],[2],[2,8],[4],[6]],1,[(5,8),(2,7)]),[2,1])
 
 if __name__=='__main__':
     unittest.main()

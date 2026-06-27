@@ -18,7 +18,7 @@ namespace {
 			maxLength = max(maxLength, toLeaf[0] + toLeaf[1] + 2);
 			return toLeaf[1] + 1;
 			};
-		dfs(0, -1);
+		dfs(1, 0);
 		return maxLength;
 	}
 
@@ -32,12 +32,12 @@ namespace {
 			}
 			return ret;
 			};
-		return dfs(0, dfs(0, 0, -1).second, -1).first;
+		return dfs(0, dfs(0, 1, 0).second, 0).first;
 	}
 
 	void test(auto f) {
-		EXPECT_EQ(f({ {} }), 0);
-		EXPECT_EQ(f({ {1,2,3},{0,4,5},{0},{0,6},{1},{1},{3} }), 4);
+		EXPECT_EQ(f({ {},{} }), 0);
+		EXPECT_EQ(f({ {},{2,3,4},{1,5,6},{1},{1,7},{2},{2},{4} }), 4);
 	}
 }
 

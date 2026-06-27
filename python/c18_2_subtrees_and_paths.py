@@ -11,12 +11,12 @@ def traversal(adj,x):
         for u in adj[s]:
             if u!=e:
                 yield from dfs(u,s)
-    return dfs(x,-1)
+    return dfs(x,0)
 
 class SubtreeQueries:
     def __init__(self,adj,val,x):
         n=len(adj)
-        cur=0
+        cur=1
         self.pos=[None]*n
         self.size=[None]*n
         def dfs(s,e):
@@ -29,23 +29,23 @@ class SubtreeQueries:
                     size+=dfs(u,s)
             self.size[self.pos[s]]=size
             return size
-        dfs(x,-1)
+        dfs(x,0)
         self.value=BIT(n)
-        for i in range(n):
-            self.value.add(self.pos[i]+1,val[i])
+        for i in range(1,n):
+            self.value.add(self.pos[i],val[i])
     def set(self,k,x):
-        self.value[self.pos[k]+1]=x
+        self.value[self.pos[k]]=x
     def sum(self,k):
         p=self.pos[k]
-        return self.value.sum(p+self.size[p])-self.value.sum(p)
+        return self.value.sum(p+self.size[p]-1)-self.value.sum(p-1)
 
 class PathQueries:
     def __init__(self,adj,val,x):
         n=len(adj)
         cur=0
         self.pos=[None]*n
-        self.size=[None]*n
-        self.value=RangeUpdates(n)
+        self.size=[None]*(n-1)
+        self.value=RangeUpdates(n-1)
         def dfs(s,e,v):
             nonlocal cur
             self.pos[s]=cur
@@ -58,30 +58,31 @@ class PathQueries:
                     size+=dfs(u,s,v)
             self.size[self.pos[s]]=size
             return size
-        dfs(x,-1,0)
+        dfs(x,0,0)
     def add(self,k,x):
         p=self.pos[k]
-        self.value.add(p,p+self.size[p],x)
+        self.value.add(p,p+self.size[p]-1,x)
     def sum(self,k):
         return self.value[self.pos[k]]
 
 class Test(unittest.TestCase):
     def test(self):
-        adj=[[1,2,3,4],[0,5],[0],[0,6,7,8],[0],[1],[3],[3],[3]]
-        self.assertEqual([*traversal([[]],0)],[0])
-        self.assertEqual([*traversal(adj,0)],[0,1,5,2,3,6,7,8,4])
+        adj=[[],[2,3,4,5],[1,6],[1],[1,7,8,9],[1],[2],[4],[4],[4]]
+        self.assertEqual([*traversal([[],[]],1)],[1])
+        self.assertEqual([*traversal(adj,1)],[1,2,6,3,4,7,8,9,5])
 
-        self.assertEqual(SubtreeQueries([[]],[3],0).sum(0),3)
-        sq=SubtreeQueries(adj,[2,3,5,3,1,4,4,3,1],0)
-        self.assertEqual(sq.sum(3),11)
-        sq.set(6,2)
-        self.assertEqual(sq.sum(3),9)
+        self.assertEqual(SubtreeQueries([[],[]],[0,3],1).sum(1),3)
+        sq=SubtreeQueries(adj,[0,2,3,5,3,1,4,4,3,1],1)
+        self.assertEqual(sq.sum(4),11)
+        sq.set(7,2)
+        self.assertEqual(sq.sum(4),9)
 
-        self.assertEqual(PathQueries([[]],[3],0).sum(0),3)
-        pq=PathQueries(adj,[4,5,3,5,2,3,5,3,1],0)
-        self.assertEqual(pq.sum(6),14)
-        pq.add(3,1)
-        self.assertEqual(pq.sum(6),15)
+        self.assertEqual(PathQueries([[],[]],[0,3],1).sum(1),3)
+        pq=PathQueries(adj,[0,4,5,3,5,2,3,5,3,1],1)
+        self.assertEqual(pq.sum(7),14)
+        pq.add(4,1)
+        self.assertEqual(pq.sum(7),15)
+        self.assertEqual(pq.sum(5),6)
 
 if __name__=='__main__':
     unittest.main()

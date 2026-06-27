@@ -5,19 +5,19 @@ import sys
 sys.setrecursionlimit(max(sys.getrecursionlimit(),1<<20))
 
 class Doubling:
-    def __init__(self,adj):
+    def __init__(self,adj,x):
         n=len(adj)
         self.d=[None]*n
-        f=[-1]*(n+1)
+        f=[-1]*n
         def dfs(s,e,d):
             f[s]=e
             self.d[s]=d
             for u in adj[s]:
                 if u!=e:
                     dfs(u,s,d+1)
-        dfs(0,-1,1)
+        dfs(x,0,1)
         self.a=[f]
-        for _ in range((n-1).bit_length()-1):
+        for _ in range((n-2).bit_length()-1):
             f=[f[i] for i in f]
             self.a.append(f)
     def ancestor(self,x,k):
@@ -25,7 +25,7 @@ class Doubling:
             if k&1:
                 x=f[x]
             k>>=1
-        return x if k<=0 else -1
+        return x if k<=0 else 0
     def __call__(self,a,b):
         if self.d[a]<self.d[b]:
             a,b=b,a
@@ -40,7 +40,7 @@ class Doubling:
         return self.d[a]+self.d[b]-2*self.d[self(a,b)]
 
 class Euler:
-    def __init__(self,adj):
+    def __init__(self,adj,x):
         self.p=[None]*len(adj)
         depth=[]
         def dfs(s,e,d):
@@ -50,7 +50,7 @@ class Euler:
                 if u!=e:
                     dfs(u,s,d+1)
                     depth.append((d,s))
-        dfs(0,-1,1)
+        dfs(x,0,1)
         self.d=MinimumQueries(depth)
     def __call__(self,a,b):
         return self.d(*sorted((self.p[a],self.p[b])))[1]
@@ -62,12 +62,12 @@ class Test(unittest.TestCase):
     def test(self):
         for A in (Doubling,Euler):
             with self.subTest(A=A):
-                a=A([[]])
-                self.assertEqual(a(0,0),0)
-                self.assertEqual(a.distance(0,0),0)
-                a=A([[1,2,3],[4,5],[],[6],[],[7],[],[]])
-                self.assertEqual(a(4,7),1)
-                self.assertEqual(a.distance(4,7),3)
+                a=A([[],[]],1)
+                self.assertEqual(a(1,1),1)
+                self.assertEqual(a.distance(1,1),0)
+                a=A([[],[2,3,4],[1,5,6],[1],[1,7],[2],[2,8],[4],[6]],1)
+                self.assertEqual(a(5,8),2)
+                self.assertEqual(a.distance(5,8),3)
 
 if __name__=='__main__':
     unittest.main()

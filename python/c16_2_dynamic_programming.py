@@ -20,7 +20,7 @@ def count_path(adj,a,b):
 def dijkstra(adj,x):
     n=len(adj)
     processed=[False]*n
-    q=[(-1,-1,x,-1)]
+    q=[(-1,0,x,-1)]
     ret=[[] for _ in adj]
     distance=[INF]*n
     distance[x]=0
@@ -42,40 +42,41 @@ class CoinProblem:
         self.coins=coins
         self.x=x
     def __len__(self):
-        return self.x+1
+        return self.x+2
     def __getitem__(self,i):
-        if i<0 or self.x<i:
+        if i==0:
+            return ()
+        if i<0 or self.x+1<i:
             raise IndexError()
-        return (i+c for c in self.coins if i+c<=self.x)
+        return (i+c for c in self.coins if i+c<=self.x+1)
 
 def bfs(adj,x,y):
     q=deque([x])
-    parent=[None]*len(adj)
+    distance=[-1]*len(adj)
+    distance[x]=0
     while q:
         s=q.popleft()
         if s==y:
-            ret=[s]
-            while (s:=parent[s]) is not None:
-                ret.append(s)
-            return reversed(ret)
+            return distance[s]
         for u in adj[s]:
-            if parent[u] is not None:
+            if distance[u]>=0:
                 continue
-            parent[u]=s
+            distance[u]=distance[s]+1
             q.append(u)
+    return INF
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual(count_path([[]],0,0),1)
-        self.assertEqual(count_path([[1,3],[2],[5],[4],[1,2],[]],0,5),3)
-        self.assertEqual(count_path(delweight(dijkstra([[]],0)),0,0),1)
-        self.assertEqual(count_path(delweight(dijkstra([[(1,3),(2,5)],[(0,3),(2,2),(3,4),(4,8)],[(0,5),(1,2),(3,2)],[(1,4),(2,2),(4,1)],[(1,8),(3,1)]],0)),0,4),3)
+        self.assertEqual(count_path([[],[]],1,1),1)
+        self.assertEqual(count_path([[],[2,4],[3],[6],[5],[2,3],[]],1,6),3)
+        self.assertEqual(count_path(delweight(dijkstra([[],[]],1)),1,1),1)
+        self.assertEqual(count_path(delweight(dijkstra([[],[(2,3),(3,5)],[(1,3),(3,2),(4,4),(5,8)],[(1,5),(2,2),(4,2)],[(2,4),(3,2),(5,1)],[(2,8),(4,1)]],1)),1,5),3)
         cp=CoinProblem([],0)
-        self.assertEqual([*bfs(cp,0,0)],[0])
-        self.assertEqual(count_path(cp,0,0),1)
+        self.assertEqual(bfs(cp,1,1),0)
+        self.assertEqual(count_path(cp,1,1),1)
         cp=CoinProblem([1,3,4],6)
-        self.assertSequenceEqual([*bfs(cp,0,6)],[0,3,6])
-        self.assertEqual(count_path(cp,0,6),9)
+        self.assertEqual(bfs(cp,1,7),2)
+        self.assertEqual(count_path(cp,1,7),9)
 
 if __name__=='__main__':
     unittest.main()

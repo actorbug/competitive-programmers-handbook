@@ -29,7 +29,7 @@ class Test(unittest.TestCase):
                     edges.discard(p)
     def assertNodeDisjoint(self,adj,s,e,l):
         with self.subTest(adj=adj,s=s,e=e):
-            nodes = {*range(len(adj))}-{s,e}
+            nodes = {*range(1,len(adj))}-{s,e}
             ret=[*node_disjoint(adj,s,e)]
             self.assertEqual(len(ret),l)
             for r in ret:
@@ -40,13 +40,13 @@ class Test(unittest.TestCase):
                 for a,b in pairwise(r):
                     self.assertIn(b,adj[a])
     def test(self):
-        adj=[[1],[]]
-        self.assertEdgeDisjoint(adj,0,1,1)
-        self.assertNodeDisjoint(adj,0,1,1)
+        adj=[[],[2],[]]
+        self.assertEdgeDisjoint(adj,1,2,1)
+        self.assertNodeDisjoint(adj,1,2,1)
 
-        adj=[[1,3],[3],[1,4,5],[2,4],[5],[]]
-        self.assertEdgeDisjoint(adj,0,5,2)
-        self.assertNodeDisjoint(adj,0,5,1)
+        adj=[[],[2,4],[4],[2,5,6],[3,5],[6],[]]
+        self.assertEdgeDisjoint(adj,1,6,2)
+        self.assertNodeDisjoint(adj,1,6,1)
 
 if __name__=='__main__':
     unittest.main()

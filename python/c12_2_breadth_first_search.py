@@ -15,8 +15,8 @@ def bfs(adj,x):
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual([*bfs([[]],0)],[(0,0)])
-        self.assertEqual([*bfs([[1,3],[0,2,4],[1,5],[0],[1,5],[2,4]],0)],[(0,0),(1,1),(3,1),(2,2),(4,2),(5,3)])
+        self.assertEqual([*bfs([[],[]],1)],[(1,0)])
+        self.assertEqual([*bfs([[],[2,4],[1,3,5],[2,6],[1],[2,6],[3,5]],1)],[(1,0),(2,1),(4,1),(3,2),(5,2),(6,3)])
 
 if __name__=='__main__':
     unittest.main()

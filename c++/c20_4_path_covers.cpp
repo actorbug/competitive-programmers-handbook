@@ -8,7 +8,7 @@ constexpr ll INF = numeric_limits<ll>::max() / 2;
 
 namespace {
 	struct Connect {
-		Connect(ll l) : adj(l), start(views::iota(0ll, l) | ranges::to<unordered_set>()) {}
+		Connect(ll l) : adj(l), start(views::iota(1ll, l) | ranges::to<unordered_set>()) {}
 		void add(ll i, ll j) {
 			adj[i].push_back(j);
 			start.erase(j);
@@ -35,7 +35,7 @@ namespace {
 	vector<vector<ll>> node_disjoint(const vector<vector<ll>>& adj) {
 		ll l = ssize(adj);
 		vector<pair<ll, ll>> edges;
-		for (ll i = 0; i < l; ++i) {
+		for (ll i = 1; i < l; ++i) {
 			for (ll j : adj[i]) {
 				edges.emplace_back(i, j + l);
 			}
@@ -49,15 +49,15 @@ namespace {
 	vector<vector<ll>> general(const vector<vector<ll>>& adj) {
 		ll l = ssize(adj);
 		vector<vector<ll>> adj2(l, vector<ll>(l));
-		for (ll i = 0; i < l; ++i) {
+		for (ll i = 1; i < l; ++i) {
 			for (ll j : adj[i]) {
 				adj2[i][j] = 1;
 			}
 		}
 		auto distance = floyd_warshall(adj2);
 		vector<pair<ll, ll>> edges;
-		for (ll i = 0; i < l; ++i) {
-			for (ll j = 0; j < l; ++j) {
+		for (ll i = 1; i < l; ++i) {
+			for (ll j = 1; j < l; ++j) {
 				if (0 < distance[i][j] && distance[i][j] < INF) {
 					edges.emplace_back(i, j + l);
 				}
@@ -67,7 +67,7 @@ namespace {
 		for (auto [i, j] : maximum_matching(edges)) {
 			j -= l;
 			while (distance[i][j] > 1) {
-				for (ll k = 0; k < l; ++k) {
+				for (ll k = 1; k < l; ++k) {
 					if (distance[k][j] == distance[i][j] - 1) {
 						con.add(i, k);
 						i = k;
@@ -86,7 +86,7 @@ namespace {
 		unordered_multiset<ll> all;
 		for (const auto& r : ret)
 			all.insert(r.begin(), r.end());
-		EXPECT_EQ(all, views::iota(0ll, ll(ssize(adj))) | ranges::to<unordered_multiset>());
+		EXPECT_EQ(all, views::iota(1ll, ll(ssize(adj))) | ranges::to<unordered_multiset>());
 		for (const auto& r : ret) {
 			for (auto [a, b] : r | views::pairwise) {
 				EXPECT_TRUE(ranges::find(adj[a], b) != adj[a].end());
@@ -100,7 +100,7 @@ namespace {
 		unordered_set<ll> all;
 		for (const auto& r : ret)
 			all.insert(r.begin(), r.end());
-		EXPECT_EQ(all, views::iota(0ll, ll(ssize(adj))) | ranges::to<unordered_set>());
+		EXPECT_EQ(all, views::iota(1ll, ll(ssize(adj))) | ranges::to<unordered_set>());
 		for (const auto& r : ret) {
 			for (auto [a, b] : r | views::pairwise) {
 				EXPECT_TRUE(ranges::find(adj[a], b) != adj[a].end());
@@ -110,11 +110,11 @@ namespace {
 }
 
 TEST(C204PathCovers, nodeDisjoint) {
-	test_node_disjoint({{1},{}}, 1);
-	test_node_disjoint({{4},{5},{3},{},{5},{2,6},{}}, 3);
+	test_node_disjoint({ {},{2},{} }, 1);
+	test_node_disjoint({ {},{5},{6},{4},{},{6},{3,7},{} }, 3);
 }
 
 TEST(C204PathCovers, general) {
-	test_general({{1},{}}, 1);
-	test_general({{4},{5},{3},{},{5},{2,6},{}}, 2);
+	test_general({ {},{2},{} }, 1);
+	test_general({ {},{5},{6},{4},{},{6},{3,7},{} }, 2);
 }

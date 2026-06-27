@@ -9,15 +9,15 @@ namespace {
 	vector<ll> debrujin(ll n, ll k) {
 		if (n <= 1)
 			return views::iota(0ll, n * k) | ranges::to<vector>();
-		vector<vector<ll>> adj;
+		vector<vector<ll>> adj(1);
 		ll d = ipow(k, n - 2);
 		for (ll i = 0; i < d * k; ++i) {
 			ll e = i % d * k;
-			adj.push_back(views::iota(e, e + k) | ranges::to<vector>());
+			adj.push_back(views::iota(e + 1, e + k + 1) | ranges::to<vector>());
 		}
 		vector<ll> ret(n - 2);
 		for (ll i : hierholzer2(adj))
-			ret.push_back(i % k);
+			ret.push_back((i - 1) % k);
 		return ret;
 	}
 

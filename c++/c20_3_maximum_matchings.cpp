@@ -61,11 +61,11 @@ vector<pair<ll, ll>> maximum_matching(const vector<pair<ll, ll>>& edges) {
 }
 
 TEST(C203MaximumMatchings, maximumMatching) {
-	test({{0,1}}, 1);
-	test({{0,4},{1,6},{2,4},{2,5},{2,7},{3,6}}, 3);
+	test({ {1,2} }, 1);
+	test({ {1,5},{2,7},{3,5},{3,6},{3,8},{4,7} }, 3);
 }
 
 TEST(C203MaximumMatchings, hallsTheorem) {
-	EXPECT_TRUE(halls_theorem({ {0,1} }));
-	EXPECT_FALSE(halls_theorem({ {0,4},{1,6},{2,4},{2,5},{2,7},{3,6} }));
+	EXPECT_TRUE(halls_theorem({ {1,2} }));
+	EXPECT_FALSE(halls_theorem({ {1,5},{2,7},{3,5},{3,6},{3,8},{4,7} }));
 }

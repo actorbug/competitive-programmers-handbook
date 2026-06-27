@@ -25,7 +25,7 @@ namespace {
 		priority_queue<tuple<ll, ll, ll, ll>, vector<tuple<ll, ll, ll, ll>>, greater<>> q;
 		vector<vector<pair<ll, ll>>> ret(n);
 		distance[x] = 0;
-		q.emplace(-1, -1, x, -1);
+		q.emplace(-1, 0, x, -1);
 		while (!q.empty()) {
 			auto [d, a, b, w] = q.top(); q.pop();
 			if (d == distance[b])
@@ -43,10 +43,10 @@ namespace {
 	}
 
 	vector<vector<ll>> coin_problem(const vector<ll>& coins, ll x) {
-		vector<vector<ll>> ret(x + 1);
-		for (ll i = 0; i <= x; ++i) {
+		vector<vector<ll>> ret(x + 2);
+		for (ll i = 1; i <= x + 1; ++i) {
 			for (ll c : coins) {
-				if (i + c <= x) {
+				if (i + c <= x + 1) {
 					ret[i].push_back(i + c);
 				}
 			}
@@ -74,20 +74,20 @@ namespace {
 }
 
 TEST(C162DynamicProgramming, countPath) {
-	EXPECT_EQ(count_path({ {} }, 0, 0), 1);
-	EXPECT_EQ(count_path({ {1,3},{2},{5},{4},{1,2},{} }, 0, 5), 3);
+	EXPECT_EQ(count_path({ {},{} }, 1, 1), 1);
+	EXPECT_EQ(count_path({ {},{2,4},{3},{6},{5},{2,3},{} }, 1, 6), 3);
 }
 
 TEST(C162DynamicProgramming, dijkstra) {
-	EXPECT_EQ(count_path(delweight(dijkstra({ {} }, 0)), 0, 0), 1);
-	EXPECT_EQ(count_path(delweight(dijkstra({ {{1,3},{2,5}},{{0,3},{2,2},{3,4},{4,8}},{{0,5},{1,2},{3,2}},{{1,4},{2,2},{4,1}},{{1,8},{3,1}} }, 0)), 0, 4), 3);
+	EXPECT_EQ(count_path(delweight(dijkstra({ {},{} }, 1)), 1, 1), 1);
+	EXPECT_EQ(count_path(delweight(dijkstra({ {},{{2,3},{3,5}},{{1,3},{3,2},{4,4},{5,8}},{{1,5},{2,2},{4,2}},{{2,4},{3,2},{5,1}},{{2,8},{4,1}} }, 1)), 1, 5), 3);
 }
 
 TEST(C162DynamicProgramming, coinProblem) {
 	auto cp = coin_problem({}, 0);
-	EXPECT_EQ(bfs(cp, 0, 0), 0);
-	EXPECT_EQ(count_path(cp, 0, 0), 1);
+	EXPECT_EQ(bfs(cp, 1, 1), 0);
+	EXPECT_EQ(count_path(cp, 1, 1), 1);
 	cp = coin_problem({ 1, 3, 4 }, 6);
-	EXPECT_EQ(bfs(cp, 0, 6), 2);
-	EXPECT_EQ(count_path(cp, 0, 6), 9);
+	EXPECT_EQ(bfs(cp, 1, 7), 2);
+	EXPECT_EQ(count_path(cp, 1, 7), 9);
 }

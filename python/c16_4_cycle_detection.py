@@ -19,8 +19,8 @@ def floyd(succ,x):
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual(floyd([0],0),(0,1))
-        self.assertEqual(floyd([1,2,3,4,5,3],0),(3,3))
+        self.assertEqual(floyd([0,1],1),(1,1))
+        self.assertEqual(floyd([0,2,3,4,5,6,4],1),(4,3))
 
 if __name__=='__main__':
     unittest.main()

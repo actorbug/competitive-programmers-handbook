@@ -4,9 +4,10 @@ from c12_3_applications import connected,finding_cycles
 from c15_2_union_find_structure import UnionFind
 
 def kruskal(adj):
+    n=len(adj)
     ret=[[] for _ in adj]
-    uf=UnionFind(len(adj))
-    for w,a,b in sorted((w,a,b) for a,e in enumerate(adj) for b,w in e):
+    uf=UnionFind(n)
+    for w,a,b in sorted((w,a,b) for a in range(1,n) for b,w in adj[a]):
         if not uf.same(a,b):
             uf.unite(a,b)
             ret[a].append((b,w))
@@ -15,16 +16,17 @@ def kruskal(adj):
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual(kruskal([]),[])
+        self.assertEqual(kruskal([[]]),[[]])
         ret=kruskal([
-            [(1,3),(4,5)],
-            [(0,3),(2,5),(4,6)],
-            [(1,5),(3,9),(5,3)],
-            [(2,9),(5,7)],
-            [(0,5),(1,6),(5,2)],
-            [(2,3),(3,7),(4,2)]
+            [],
+            [(2,3),(5,5)],
+            [(1,3),(3,5),(5,6)],
+            [(2,5),(4,9),(6,3)],
+            [(3,9),(6,7)],
+            [(1,5),(2,6),(6,2)],
+            [(3,3),(4,7),(5,2)]
         ])
-        self.assertEqual(sum(w for r in ret for _,w in r),20*2)
+        self.assertEqual(sum(w for i in range(1,len(ret)) for _,w in ret[i]),20*2)
         adj=delweight(ret)
         self.assertEqual(len([*connected(adj)]),1)
         self.assertFalse(finding_cycles(adj))

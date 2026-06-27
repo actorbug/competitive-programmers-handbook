@@ -16,7 +16,7 @@ def topological(adj):
         ret.append(s)
         visited[s]=2
         return True
-    for x in range(n):
+    for x in range(1,n):
         if not visited[x] and not dfs(x):
             return None
     ret.reverse()
@@ -26,13 +26,13 @@ class Test(unittest.TestCase):
     def assertTopological(self,adj):
         with self.subTest(adj=adj):
             pos={v:i for i,v in enumerate(topological(adj))}
-            for a in range(len(adj)):
+            for a in range(1,len(adj)):
                 for b in adj[a]:
                     self.assertLess(pos[a],pos[b])
     def test(self):
-        self.assertTopological([])
-        self.assertTopological([[1],[2],[5],[0,4],[1,2],[]])
-        self.assertIsNone(topological([[1],[2],[4,5],[0,4],[1],[]]))
+        self.assertTopological([[]])
+        self.assertTopological([[],[2],[3],[6],[1,5],[2,3],[]])
+        self.assertIsNone(topological([[],[2],[3],[5,6],[1,5],[2],[]]))
 
 if __name__=='__main__':
     unittest.main()

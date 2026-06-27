@@ -10,7 +10,7 @@ namespace {
 	vector<vector<pair<ll, ll>>> kruskal(const vector<vector<pair<ll, ll>>>& adj) {
 		ll n = ssize(adj);
 		vector<tuple<ll, ll, ll>> edges;
-		for (ll a = 0; a < n; ++a)
+		for (ll a = 1; a < n; ++a)
 			for (auto [b, w] : adj[a])
 				edges.emplace_back(w, a, b);
 		ranges::sort(edges);
@@ -28,8 +28,8 @@ namespace {
 }
 
 TEST(C151KruskalsAlgorithm, kruskal) {
-	EXPECT_EQ(kruskal({}), (vector<vector<pair<ll, ll>>>{}));
-	auto ret = kruskal({ {{1,3},{4,5}},{{0,3},{2,5},{4,6}},{{1,5},{3,9},{5,3}},{{2,9},{5,7}},{{0,5},{1,6},{5,2}},{{2,3},{3,7},{4,2}} });
+	EXPECT_EQ(kruskal({ {} }), (vector<vector<pair<ll, ll>>>{ {} }));
+	auto ret = kruskal({ {},{{2,3},{5,5}},{{1,3},{3,5},{5,6}},{{2,5},{4,9},{6,3}},{{3,9},{6,7}},{{1,5},{2,6},{6,2}},{{3,3},{4,7},{5,2}} });
 	ll sum = 0;
 	for (const auto& v : ret)
 		for (auto [_, w] : v)

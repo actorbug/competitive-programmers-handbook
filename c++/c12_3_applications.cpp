@@ -16,22 +16,24 @@ namespace {
 		return false;
 	}
 
-	optional<vector<ll>> bipartiteness_check(const vector<vector<ll>>& adj) {
+	optional<vector<bool>> bipartiteness_check(const vector<vector<ll>>& adj) {
 		ll n = ssize(adj);
-		vector<ll> color(n, -1);
-		auto dfs = [&](this auto self, ll s, ll c) {
-			if (color[s] >= 0)
+		vector<bool> visited(n);
+		vector<bool> color(n);
+		auto dfs = [&](this auto self, ll s, bool c) {
+			if (visited[s])
 				return color[s] == c;
+			visited[s] = true;
 			color[s] = c;
 			for (ll u : adj[s]) {
-				if (!self(u, 1 - c)) {
+				if (!self(u, !c)) {
 					return false;
 				}
 			}
 			return true;
 			};
-		for (ll i = 0; i < n; ++i) {
-			if (color[i] < 0 && !dfs(i, 0)) {
+		for (ll i = 1; i < n; ++i) {
+			if (!visited[i] && !dfs(i, false)) {
 				return nullopt;
 			}
 		}
@@ -54,7 +56,7 @@ vector<vector<ll>> connected(const vector<vector<ll>>& adj) {
 		for (ll u : adj[s])
 			self(u);
 		};
-	for (ll i = 0; i < n; ++i)
+	for (ll i = 1; i < n; ++i)
 		if (!visited[i]) {
 			ret.resize(ret.size() + 1);
 			dfs(i);
@@ -76,8 +78,8 @@ bool finding_cycles(const vector<vector<ll>>& adj) {
 		}
 		return false;
 		};
-	for (ll i = 0; i < n; ++i) {
-		if (!visited[i] && dfs(i, -1)) {
+	for (ll i = 1; i < n; ++i) {
+		if (!visited[i] && dfs(i, 0)) {
 			return true;
 		}
 	}
@@ -85,26 +87,26 @@ bool finding_cycles(const vector<vector<ll>>& adj) {
 }
 
 TEST(C123Applications, connected) {
-	EXPECT_EQ(convert(connected({})), multiset<multiset<ll>>{});
-	EXPECT_EQ(convert(connected({ {} })), multiset<multiset<ll>>{{0}});
-	EXPECT_EQ(convert(connected({ {2,3},{4},{0,3},{0,2},{1} })), (multiset<multiset<ll>>{{0,2,3},{1,4}}));
+	EXPECT_EQ(convert(connected({ {} })), multiset<multiset<ll>>{});
+	EXPECT_EQ(convert(connected({ {},{} })), multiset<multiset<ll>>{{1}});
+	EXPECT_EQ(convert(connected({ {},{3,4},{5},{1,4},{1,3},{2} })), (multiset<multiset<ll>>{ {1,3,4},{2,5} }));
 }
 
 TEST(C123Applications, findingCycles) {
-	EXPECT_FALSE(finding_cycles({ {} }));
-	EXPECT_TRUE(finding_cycles({ {2,3},{2,4},{0,1,3,4},{0,2},{1,2} }));
-	EXPECT_TRUE(finding_cycles({ {},{2,3},{3,1},{1,2} }));
+	EXPECT_FALSE(finding_cycles({ {},{} }));
+	EXPECT_TRUE(finding_cycles({ {},{3,4},{3,5},{1,2,4,5},{1,3},{2,3} }));
+	EXPECT_TRUE(finding_cycles({ {},{},{3,4},{4,2},{2,3} }));
 }
 
 TEST(C123Applications, findingCycles2) {
-	EXPECT_FALSE(finding_cycles2({ {} }));
-	EXPECT_TRUE(finding_cycles2({ {2,3},{2,4},{0,1,3,4},{0,2},{1,2} }));
-	EXPECT_TRUE(finding_cycles2({ {},{2,3},{3,1},{1,2} }));
+	EXPECT_FALSE(finding_cycles2({ {},{} }));
+	EXPECT_TRUE(finding_cycles2({ {},{3,4},{3,5},{1,2,4,5},{1,3},{2,3} }));
+	EXPECT_TRUE(finding_cycles2({ {},{},{3,4},{4,2},{2,3} }));
 }
 
 TEST(C123Applications, bipartitenessCheck) {
-	EXPECT_EQ(bipartiteness_check({}), vector<ll>{});
-	EXPECT_EQ(bipartiteness_check({ {} }), vector<ll>{{0}});
-	EXPECT_EQ(bipartiteness_check({ {1,3},{0,2,4},{1,4},{0,4},{1,2,3} }), nullopt);
-	EXPECT_EQ(bipartiteness_check({ {},{2,3},{3,1},{1,2} }), nullopt);
+	EXPECT_EQ(bipartiteness_check({ {} }), vector<bool>{false});
+	EXPECT_EQ(bipartiteness_check({ {},{} }), (vector<bool>{false,false}));
+	EXPECT_EQ(bipartiteness_check({ {},{2,4},{1,3,5},{2,5},{1,5},{2,3,4} }), nullopt);
+	EXPECT_EQ(bipartiteness_check({ {},{},{3,4},{4,2},{2,3} }), nullopt);
 }

@@ -8,7 +8,7 @@ namespace {
 	vector<vector<ll>> edge_disjoint(const vector<vector<ll>>& adj, ll s, ll e) {
 		ll n = ssize(adj);
 		vector<vector<pair<ll, ll>>> adj2(n);
-		for (ll i = 0; i < n; ++i) {
+		for (ll i = 1; i < n; ++i) {
 			for (auto j : adj[i]) {
 				adj2[i].emplace_back(j, 1);
 			}
@@ -67,7 +67,7 @@ namespace {
 	}
 
 	void test_node(const vector<vector<ll>>& adj, ll s, ll e, ll l) {
-		auto nodes = views::iota(0ll, ll(ssize(adj))) | ranges::to<unordered_set>();
+		auto nodes = views::iota(1ll, ll(ssize(adj))) | ranges::to<unordered_set>();
 		nodes.erase(s);
 		nodes.erase(e);
 		auto ret = node_disjoint(adj, s, e);
@@ -87,11 +87,11 @@ namespace {
 }
 
 TEST(C202DisjointPaths, edgeDisjoint) {
-	test_edge({{1},{}}, 0, 1, 1);
-	test_edge({{1,3},{3},{1,4,5},{2,4},{5},{}}, 0, 5, 2);
+	test_edge({{},{2},{}}, 1, 2, 1);
+	test_edge({{},{2,4},{4},{2,5,6},{3,5},{6},{}}, 1, 6, 2);
 }
 
 TEST(C202DisjointPaths, nodeDisjoint) {
-	test_node({{1},{}}, 0, 1, 1);
-	test_node({{1,3},{3},{1,4,5},{2,4},{5},{}}, 0, 5, 1);
+	test_node({{},{2},{}}, 1, 2, 1);
+	test_node({{},{2,4},{4},{2,5,6},{3,5},{6},{}}, 1, 6, 1);
 }

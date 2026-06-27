@@ -8,7 +8,7 @@ namespace {
 		Succ(vector<ll> func, ll u) : succ(u + 1, vector<ll>(func.size())) {
 			succ[0] = move(func);
 			for (ll i = 1; i <= u; ++i) {
-				for (ll j = 0; j < ssize(succ[i - 1]); ++j) {
+				for (ll j = 1; j < ssize(succ[i - 1]); ++j) {
 					succ[i][j] = succ[i - 1][succ[i - 1][j]];
 				}
 			}
@@ -27,8 +27,8 @@ namespace {
 }
 
 TEST(C163SuccessorPaths, Succ) {
-	EXPECT_EQ(Succ({ 0 }, 3)(0, 10), 0);
-	Succ succ({ 2,4,6,5,1,1,0,5,2 }, 3);
-	EXPECT_EQ(succ(3, 6), 1);
-	EXPECT_EQ(succ(3, 11), 4);
+	EXPECT_EQ(Succ({ 0,1 }, 3)(1, 10), 1);
+	Succ succ({ 0,3,5,7,6,2,2,1,6,3 }, 3);
+	EXPECT_EQ(succ(4, 6), 2);
+	EXPECT_EQ(succ(4, 11), 5);
 }

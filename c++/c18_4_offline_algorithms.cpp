@@ -11,7 +11,7 @@ namespace {
 		for (ll i = 0; i < ssize(q); ++i)
 			r[q[i].first].push_back(i);
 		vector<unordered_map<ll, ll>> d(adj.size());
-		for (ll i = 0; i < ssize(adj); ++i)
+		for (ll i = 1; i < ssize(adj); ++i)
 			d[i][val[i]] = 1;
 		auto dfs = [&](this auto self, ll s, ll e) -> void {
 			for (ll u : adj[s]) {
@@ -26,7 +26,7 @@ namespace {
 			for (ll i : r[s])
 				a[i] = d[s][q[i].second];
 			};
-		dfs(x, -1);
+		dfs(x, 0);
 		return a;
 	}
 
@@ -57,17 +57,17 @@ namespace {
 				}
 			}
 			};
-		dfs(x, -1);
+		dfs(x, 0);
 		return a;
 	}
 }
 
 TEST(C184OfflineAlgorithms, merging) {
-	EXPECT_EQ(merging({ {} }, {3}, 0, {}), vector<ll>{});
-	EXPECT_EQ(merging({ {1,2,3,4},{0,5},{0},{0,6,7,8},{0},{1},{3},{3},{3} }, { 2,3,5,3,1,4,4,3,1 }, 0, { {3,3} }), vector<ll>{2});
+	EXPECT_EQ(merging({ {},{} }, { 0,3 }, 1, {}), vector<ll>{});
+	EXPECT_EQ(merging({ {},{2,3,4,5},{1,6},{1},{1,7,8,9},{1},{2},{4},{4},{4} }, { 0,2,3,5,3,1,4,4,3,1 }, 1, { {4,3} }), vector<ll>{2});
 }
 
 TEST(C184OfflineAlgorithms, lca) {
-	EXPECT_EQ(lca({ {} }, 0, {}), vector<ll>{});
-	EXPECT_EQ(lca({ {1,2,3},{0,4,5},{0},{0,6},{1},{1,7},{3},{5} }, 0, { {4,7},{1,6} }), (vector<ll>{1,0}));
+	EXPECT_EQ(lca({ {},{} }, 1, {}), vector<ll>{});
+	EXPECT_EQ(lca({ {},{2,3,4},{1,5,6},{1},{1,7},{2},{2,8},{4},{6} }, 1, { {5,8},{2,7} }), (vector<ll>{2,1}));
 }
